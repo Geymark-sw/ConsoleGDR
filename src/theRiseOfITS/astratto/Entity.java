@@ -1,0 +1,67 @@
+package theRiseOfITS.astratto;
+
+public abstract class Entity {
+	
+	private int id;
+	private String name;
+	private int hp;
+	private int atk;
+	private int def;
+	
+	public Entity(int id, String name, int hp, int atk, int def) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.hp = hp;
+		this.atk = atk;
+		this.def = def;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getAtk() {
+		return atk;
+	}
+
+	public void setAtk(int atk) {
+		this.atk = atk;
+	}
+
+	public int getDef() {
+		return def;
+	}
+
+	public void setDef(int def) {
+		this.def = def;
+	}
+
+	@Override
+	public String toString() {
+		return "Entity [id=" + id + ", name=" + name + ", hp=" + hp + ", atk=" + atk + ", def=" + def + "]";
+	}
+	
+	
+
+}

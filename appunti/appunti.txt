@@ -1,0 +1,80 @@
+- Meccaniche di gioco:
+	- Esplorazione
+		- mappa ad albero
+		- guardati attorno se la stanza è buia--> approfondisci ciò he trovi(str con obj/mob) e poi approfondisci per lootare
+		- se la stanza è illuminata ( str con obj/mob )--> approfondisci per lootare
+	- Combattimento
+		-a turni
+		-possibilità di scappare
+		-parte sempre prima il player
+		-possibilità di utilizzare i consumabili
+	- Gestione risorse
+		-fuori e dentro il combattimento
+	- Esci dal gioco
+	
+
+- Entità:
+	- Giocatore: guarda classe giocatore
+	- Nemici:
+		-attaccano sempre
+		-drop random obj basso
+	- Boss:
+		-droppano oggetto chiave(pezzo di pergamena) per accedere al boss finale e consumabili vari
+	- Boss finale
+	- NPC :
+		-frasi per lore
+	- Mercante:
+		-
+	
+- Oggetti:
+	- Armi
+	- Armature
+	- Consumabili:
+		-chiavi
+		-crediti
+		-pozioni
+		-bombe
+	- Oggetti chiave:
+		- Pezzi di messaggio del boss
+	-Chest:
+		-random consumabili
+		
+		
+- Stanze:
+	- Stanza iniziale:
+		-random obj.
+	- Stanza del boss:
+		-boss fight, e dopo aver vinto puoi decidere se salire di piano
+	- Stanza del potenziamento:
+		-trovi sempre 1 oggetto tra armi o armature
+	- Stanza del mercante:
+		-possibilità di acquistare consumabili ed armi/armature
+	-Stanza randomica:
+		-possibilità di mob
+		-possibilità di random obj.
+
+
+
+- Classi:
+	
+	- Personaggio:
+
+		- Nickname del personaggio
+
+		- Salute del personaggio:
+			Salute base: 100 hp
+
+		- Attacco/Potenza del personaggio:
+			Attacco base = 5 atk
+			Può essere aumentato dagli oggetti
+			Es. pugnale = 10 atk
+
+		- Difesa del personaggio:
+			Difesa base = 0 def
+			Può essere aumentato tramite oggetti
+			Es. elmo = 20 def
+
+		-Crediti del personaggio
+			Es. crediti = 200c
+			Crediti base = 0c
+
