@@ -11,11 +11,12 @@ import theRiseOfITS.concreto.entity.Mob;
 public class MerchantRoom extends Room{
 	private Merchant merchant;
 	
+	//Default constructor from superclass
 	public MerchantRoom(String name, List<Item> items, List<Entity> npcs, List<Mob> mobs) {
 		super(name, items, npcs, mobs);
-		// TODO Auto-generated constructor stub
 	}
 	
+	//Constructor that generates the name, the items and the merchant of the room
 	public MerchantRoom(String name, List<Item> items, Merchant merchant) {
 		this.setName(name);
 		this.setItems(items);

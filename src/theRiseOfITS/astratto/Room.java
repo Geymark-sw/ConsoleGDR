@@ -78,6 +78,15 @@ public abstract class Room {
 		this.mobs = mobs;
 	}
 
+	@Override
+	public String toString() {
+		return "Ti trovi nella seguente stanza: " + name 
+				+ "\nPer terra ci sono i seguenti oggetti: "+ items
+				+ "\n Ci sono i seguenti mob: " + mobs;
+	}
+	
+	
+
 
 	
 	
