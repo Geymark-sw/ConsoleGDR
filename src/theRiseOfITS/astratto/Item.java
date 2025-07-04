@@ -2,13 +2,15 @@ package theRiseOfITS.astratto;
 
 public abstract class Item {
 	
+	private static int idStatico = 0;
 	private int id;
 	private String nome;
 	private boolean key; // if it is a key item for the lore
 	
-	public Item(int id, String nome, boolean key) {
+	public Item( String nome, boolean key) {
 		super();
-		this.id = id;
+		this.id = idStatico;
+		idStatico++;
 		this.nome = nome;
 		this.key = key;
 	}

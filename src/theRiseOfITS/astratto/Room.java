@@ -2,27 +2,32 @@ package theRiseOfITS.astratto;
 
 import java.util.List;
 
-import theRiseOfITS.concreto.Merchant;
-import theRiseOfITS.concreto.Mob;
+import theRiseOfITS.concreto.entity.Mob;
+
 
 public abstract class Room {
 	
+	private static int idStatico = 0;
 	private int id;
 	private String name;
 	private List<Item> items;
-	private List<Merchant> npcs;
+	private List<Entity> npcs;
 	private List<Mob> mobs;
 	
 	
-	public Room(int id, String name, List<Item> items, List<Merchant> npcs, List<Mob> mobs) {
+	public Room(String name, List<Item> items, List<Entity> npcs, List<Mob> mobs) {
 		super();
-		this.id = id;
+		this.id = idStatico;
+		idStatico ++;
 		this.name = name;
 		this.items = items;
 		this.npcs = npcs;
 		this.mobs = mobs;
 	}
 
+	public Room() {
+		
+	}
 
 	public int getId() {
 		return id;
@@ -54,12 +59,12 @@ public abstract class Room {
 	}
 
 
-	public List<Merchant> getNpcs() {
+	public List<Entity> getNpcs() {
 		return npcs;
 	}
 
 
-	public void setNpcs(List<Merchant> npcs) {
+	public void setNpcs(List<Entity> npcs) {
 		this.npcs = npcs;
 	}
 

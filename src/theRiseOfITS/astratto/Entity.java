@@ -2,15 +2,17 @@ package theRiseOfITS.astratto;
 
 public abstract class Entity {
 	
+	private static int staticId = 0;
 	private int id;
 	private String name;
 	private int hp;
 	private int atk;
 	private int def;
 	
-	public Entity(int id, String name, int hp, int atk, int def) {
+	public Entity(String name, int hp, int atk, int def) {
 		super();
-		this.id = id;
+		this.id = staticId;
+		staticId++;
 		this.name = name;
 		this.hp = hp;
 		this.atk = atk;

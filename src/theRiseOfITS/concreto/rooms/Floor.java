@@ -1,4 +1,4 @@
-package theRiseOfITS.concreto;
+package theRiseOfITS.concreto.rooms;
 
 import java.util.List;
 import java.util.Map;
@@ -7,14 +7,16 @@ import theRiseOfITS.astratto.Room;
 
 public class Floor {
 	
+	private static int idStatico = 0;
 	private int id;
 	private String name;
 	private List<Room> rooms; 
 	
 	
-	public Floor(int id, String name) {
+	public Floor(String name) {
 		super();
-		this.id = id;
+		this.id = idStatico;
+		idStatico++;
 		this.name = name;
 	}
 
