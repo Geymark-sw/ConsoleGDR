@@ -1,5 +1,7 @@
 package theRiseOfITS.astratto;
 
+import theRiseOfITS.concreto.entity.Mob;
+
 public abstract class Entity {
 	
 	private static int staticId = 0;
@@ -18,6 +20,13 @@ public abstract class Entity {
 		this.atk = atk;
 		this.def = def;
 	}
+	
+	
+
+	public Entity() {
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -64,6 +73,21 @@ public abstract class Entity {
 		return "Entity [id=" + id + ", name=" + name + ", hp=" + hp + ", atk=" + atk + ", def=" + def + "]";
 	}
 	
+	//function that allows an entity to do damage to a given mob, 
+	//reducing his health if the attack goes through the mob's defence
+	public boolean attack(Mob mob) {
+		return mob.takeDamage(this.atk);
+	}
 	
+	//function that allows a mob to take damage by a given atk
+	//reducing his health if the attack goes through the mob's defence
+	public boolean takeDamage(int atk) {
+		if (atk >= this.def) {
+			this.hp -= (getAtk() - this.def);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

@@ -3,6 +3,7 @@ package theRiseOfITS.astratto;
 import java.util.List;
 
 import theRiseOfITS.concreto.entity.Mob;
+import theRiseOfITS.utilities.utility;
 
 
 public abstract class Room {
@@ -24,6 +25,7 @@ public abstract class Room {
 		this.npcs = npcs;
 		this.mobs = mobs;
 	}
+	
 
 	public Room() {
 		
@@ -85,11 +87,6 @@ public abstract class Room {
 				+ "\n Ci sono i seguenti mob: " + mobs;
 	}
 	
-	
 
-
-	
-	
-	
 	
 }

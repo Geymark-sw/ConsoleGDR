@@ -1,0 +1,63 @@
+[
+  {
+    "type": "armor",
+    "nome": "Corazza di diamante",
+    "key": false,
+    "defense": 15
+  },
+  {
+    "type": "armor",
+    "nome": "Corazza di ferro",
+    "key": false,
+    "defense": 8
+  },
+  {
+    "type": "armor",
+    "nome": "Corazza di cuoio",
+    "key": false,
+    "defense": 5
+  },
+  {
+      "type": "bomb",
+      "nome": "Bomba piccola",
+      "key": false,
+      "damage": 10
+    },
+    {
+      "type": "bomb",
+      "nome": "Bomba media",
+      "key": false,
+      "damage": 25
+    },
+    {
+      "type": "bomb",
+      "nome": "Bomba grande",
+      "key": false,
+      "damage": 30
+    },
+	{
+	    "type": "coin",
+	    "nome": "Moneta",
+	    "key": false
+	},
+	{
+	    "type": "potion",
+	    "nome": "Pozione curativa piccola",
+	    "key": false,
+	    "hp": 20
+	},
+	{
+	    "type": "potion",
+	    "nome": "Pozione curativa media",
+	    "key": false,
+	    "hp": 40
+	},
+	{
+	    "type": "potion",
+	    "nome": "Pozione curativa grande",
+	    "key": false,
+	    "hp": 80
+	  },
+	  
+  
+]
