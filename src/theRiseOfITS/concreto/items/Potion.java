@@ -6,12 +6,10 @@ import theRiseOfITS.interfacce.Consumable;
 public class Potion extends Item implements Consumable {
 	
 	private boolean used = false;
-	private int hp;
+	private int hp = 30;
 	
-	public Potion(String name, boolean key, int hp) {
+	public Potion(String name, boolean key) {
 		super(name, key);
-		this.hp = hp;
-		
 	}
 
 	@Override
@@ -25,6 +23,16 @@ public class Potion extends Item implements Consumable {
 
 	public void setUsed(boolean used) {
 		this.used = used;
+	}
+	
+	
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
 	}
 
 	@Override

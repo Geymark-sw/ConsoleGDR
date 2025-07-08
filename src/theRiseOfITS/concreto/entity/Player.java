@@ -6,10 +6,11 @@ import java.util.List;
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
 import theRiseOfITS.astratto.Room;
+import theRiseOfITS.concreto.items.Armor;
 import theRiseOfITS.concreto.items.Bomb;
 import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
-import theRiseOfITS.interfacce.Consumable;
+import theRiseOfITS.concreto.items.Weapon;
 
 public class Player extends Entity {
 	
@@ -17,13 +18,16 @@ public class Player extends Entity {
 	private Item[] inventory;
 	private int equippedWeaponDamage = 0;
 	private int equippedArmorDefense = 0;
-	
-	public Player(String name, int hp, int atk, int def) {
-		super(name, hp, atk, def);
+
+	public Player(String name) {
+		// Imposto hp, atk, def iniziali fissi
+		super(name, 100, 10, 5);  // esempio: 100 HP, 10 ATK, 5 DEF
 		this.inventory = new Item[10];
 		this.value = 0;
-		this.setDef(def+equippedArmorDefense);
-		this.setAtk(atk+equippedWeaponDamage);
+
+		// Aggiungo i bonus da equipaggiamento
+		this.setDef(this.getDef() + equippedArmorDefense);
+		this.setAtk(this.getAtk() + equippedWeaponDamage);
 	}
 
 	
@@ -50,31 +54,33 @@ public class Player extends Entity {
 		this.inventory = inventory;
 	}
 	
-	public void removeConsumedItemsFromInventory() {
-		//Questa lista mi serve per convertire da array a lista
-		List<Item> itemCheRimangono = new ArrayList<>();
+	//function that removes from the inventory the consumed or null items
+	public void removeConsumedOrNullItemsFromInventory() {
+	    // Lista temporanea per raccogliere solo gli oggetti validi
+	    List<Item> oggettiValidi = new ArrayList<>();
 
 	    for (Item item : this.inventory) {
 	        if (item instanceof Potion) {
 	            if (!((Potion) item).isUsed()) {
-	                itemCheRimangono.add(item); // tieni solo se non usata
+	                oggettiValidi.add(item);
 	            }
 	        } else if (item instanceof Bomb) {
 	            if (!((Bomb) item).isUsed()) {
-	                itemCheRimangono.add(item); // tieni solo se non usata
+	                oggettiValidi.add(item);
 	            }
-	        } else if (item instanceof Coin) {
-	            if (!((Coin) item).isUsed()) {
-	                itemCheRimangono.add(item); // tieni solo se non usata
-	            }
-	        } else {
-	            // Altri oggetti (non consumabili) → li tieni sempre
-	            itemCheRimangono.add(item);
+	        } else if (item != null) {
+	            oggettiValidi.add(item);
 	        }
 	    }
-	    //Converto di nuovo da lista ad array
-	    this.inventory = itemCheRimangono.toArray(new Item[0]);
+	    // Ricrea un array con la stessa dimensione di quello vecchio
+	    Item[] nuovoInventario = new Item[this.inventory.length];
+	    for (int i = 0; i < oggettiValidi.size() && i < nuovoInventario.length; i++) {
+	        nuovoInventario[i] = oggettiValidi.get(i);
+	    }
+
+	    this.inventory = nuovoInventario;
 	}
+
 
 	//function that allows the player to collect an item and place it in his inventory
 	public boolean raccogliItem(Item item) {
@@ -93,12 +99,58 @@ public class Player extends Entity {
 		return false;
 	}
 	
-	public boolean usePotion(Potion potion) {
+	public boolean usePotion() {
+	    Item[] inventory = this.getInventory();
+
+	    for (int i = 0; i < inventory.length; i++) {
+	        Item item = inventory[i];
+
+	        if (item instanceof Potion) {
+	            Potion potion = (Potion) item;
+
+	            if (this.getHp() >= 100) {
+	                return false; // Salute già al massimo
+	            }
+
+	            if ((this.getHp() + potion.getHp()) > 100) {
+	                this.setHp(100);
+	            } else {
+	                this.setHp(this.getHp() + potion.getHp());
+	            }
+	            
+	            potion.isUsed();
+	            inventory[i] = null;
+	            removeConsumedOrNullItemsFromInventory();
+	            return true;
+	        }
+	    }
+	    
+	    return false; // Nessuna pozione trovata nell'inventario
+	}
+
 		
-		return false;
+		
+		
+	
+	public boolean isDead() {
+		return this.getHp() <= 0;
 	}
 	
 	public boolean useBomb(Bomb bomb) {
+		//da implementare
+		return false;
+	}
+	
+	public boolean equipWeapon(Weapon weapon) {
+		 for (int i = 0; i < inventory.length; i++) {
+			 if(weapon instanceof Weapon) {
+				 
+			 }
+		 }
+		return false;
+	}
+	
+	public boolean equipArmor(Armor armor) {
 		//da implementare
 		return false;
 	}
@@ -110,13 +162,13 @@ public class Player extends Entity {
 	}
 	
 	
-	public void examineRoom(Room room) {
+	public String examineRoom(Room room) {
 		String stampa = "";
 		List<Item> oggettiPerTerra = room.getItems();
 		//Se i mob attaccano il giocatore immediatamente, esaminare quali mob ci sono è inutile
 		List<Mob> mobNellaStanza = room.getMobs();
-		stampa = stampa + "A terra trovi i seguenti oggetti: " + oggettiPerTerra + "\nE questi mob: " + mobNellaStanza +
-				"\nVuoi raccogliere un oggetto?"; //da continuare
+		stampa = stampa + "A terra trovi i seguenti oggetti: " + oggettiPerTerra + "\nE questi mob: " + mobNellaStanza;
+		return stampa;
 	}
 	
 	
