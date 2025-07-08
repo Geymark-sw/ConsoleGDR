@@ -1,6 +1,5 @@
 package theRiseOfITS.astratto;
 
-import theRiseOfITS.concreto.entity.Mob;
 
 public abstract class Entity {
 	
@@ -75,15 +74,15 @@ public abstract class Entity {
 	
 	//function that allows an entity to do damage to a given mob, 
 	//reducing his health if the attack goes through the mob's defence
-	public boolean attack(Mob mob) {
-		return mob.takeDamage(this.atk);
+	public boolean attack(Entity entity) {
+		return entity.takeDamage(this.atk);
 	}
 	
 	//function that allows a mob to take damage by a given atk
 	//reducing his health if the attack goes through the mob's defence
 	public boolean takeDamage(int atk) {
 		if (atk >= this.def) {
-			this.hp -= (getAtk() - this.def);
+			this.hp -= (atk - this.def);
 			return true;
 		} else {
 			return false;
