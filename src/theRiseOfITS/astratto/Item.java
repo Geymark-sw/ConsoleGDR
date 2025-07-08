@@ -1,9 +1,5 @@
 package theRiseOfITS.astratto;
 
-<<<<<<< HEAD
-=======
-//import com.fasterxml.jackson.annotation.JsonTypeInfo;
->>>>>>> ef7d75624d253ee149709b8c8edfa6a61d410096
 
 import theRiseOfITS.concreto.items.Armor;
 import theRiseOfITS.concreto.items.Bomb;
@@ -11,8 +7,6 @@ import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
 
-<<<<<<< HEAD
-=======
 //import com.fasterxml.jackson.annotation.JsonSubTypes;
 //
 //Questa parte serve a dire che leggendo il file json, quando il type dell'oggetto json 
@@ -30,7 +24,7 @@ import theRiseOfITS.concreto.items.Weapon;
 //  @JsonSubTypes.Type(value = Potion.class, name = "potion"),
 //  @JsonSubTypes.Type(value = Weapon.class, name = "weapon"),
 //})
->>>>>>> ef7d75624d253ee149709b8c8edfa6a61d410096
+
 
 
 public abstract class Item {
