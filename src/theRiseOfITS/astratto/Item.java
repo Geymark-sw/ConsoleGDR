@@ -1,5 +1,4 @@
 package theRiseOfITS.astratto;
-//import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import theRiseOfITS.concreto.items.Armor;
 import theRiseOfITS.concreto.items.Bomb;
@@ -24,6 +23,7 @@ import theRiseOfITS.concreto.items.Weapon;
 //  @JsonSubTypes.Type(value = Potion.class, name = "potion"),
 //  @JsonSubTypes.Type(value = Weapon.class, name = "weapon"),
 //})
+
 
 public abstract class Item {
 	
