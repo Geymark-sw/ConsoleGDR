@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.io.File;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
 
@@ -29,30 +26,24 @@ public class utility {
 		return list.get(itemIndex);
 	}
 	
-	public static List<Item> randomListOfItemsFromDB(int size){
-		List<Item> allItems = leggiItemsDaJson("/TheRiseOfITS/src/theRiseOfITS/databases/ItemsDB.json");
-		 List<Item> selezionati = new ArrayList<>();
-		 Random random = new Random();
-
-	        if (allItems == null || allItems.isEmpty() || size <= 0) {
-	            return selezionati; // lista vuota
-	        }
-
-	        for (int i = 0; i < size; i++) {
-	            int index = random.nextInt(allItems.size());
-	            selezionati.add(allItems.get(index));
-	        }
-
-	        return selezionati;
-	}
-	
-	public static List<Item> leggiItemsDaJson(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(new File(filePath), new TypeReference<List<Item>>() {}); //usa istance of per filtrare tipi di item
-        } catch (IOException e) {
-            e.printStackTrace();
-            return List.of(); // ritorna lista vuota se c'è un errore
-        }
-    }
+	/*
+	 * public static List<Item> randomListOfItemsFromDB(int size){ List<Item>
+	 * allItems =
+	 * leggiItemsDaJson("/TheRiseOfITS/src/theRiseOfITS/databases/ItemsDB.json");
+	 * List<Item> selezionati = new ArrayList<>(); Random random = new Random();
+	 * 
+	 * if (allItems == null || allItems.isEmpty() || size <= 0) { return
+	 * selezionati; // lista vuota }
+	 * 
+	 * for (int i = 0; i < size; i++) { int index = random.nextInt(allItems.size());
+	 * selezionati.add(allItems.get(index)); }
+	 * 
+	 * return selezionati; }
+	 * 
+	 * public static List<Item> leggiItemsDaJson(String filePath) { ObjectMapper
+	 * mapper = new ObjectMapper(); try { return mapper.readValue(new
+	 * File(filePath), new TypeReference<List<Item>>() {}); //usa istance of per
+	 * filtrare tipi di item } catch (IOException e) { e.printStackTrace(); return
+	 * List.of(); // ritorna lista vuota se c'è un errore } }
+	 */
 }
