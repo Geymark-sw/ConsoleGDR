@@ -3,7 +3,6 @@ package theRiseOfITS.astratto;
 import java.util.List;
 
 import theRiseOfITS.concreto.entity.Mob;
-import theRiseOfITS.utilities.utility;
 
 
 public abstract class Room {
