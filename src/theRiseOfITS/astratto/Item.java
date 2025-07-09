@@ -32,6 +32,7 @@ public abstract class Item {
 	private static int idStatico = 0;
 	private int id;
 	private String nome;
+	private int price = 0;
 	private boolean key; // if it is a key item for the lore
 	
 	public Item( String nome, boolean key) {
@@ -69,6 +70,14 @@ public abstract class Item {
 		this.key = key;
 	}
 
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+	
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", nome=" + nome + ", key=" + key + "]";

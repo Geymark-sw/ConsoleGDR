@@ -14,6 +14,14 @@ public class Coin extends Item implements Consumable{
 	public Coin(String name, boolean key) {
 		super(name, key);
 	}
+	
+	
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+
 
 	@Override
 	public void consume() {

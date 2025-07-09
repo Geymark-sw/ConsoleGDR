@@ -1,6 +1,7 @@
 package theRiseOfITS.concreto.entity;
 
 import java.util.List;
+import java.util.Random;
 
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
@@ -24,21 +25,44 @@ public class Merchant extends Entity implements Speakable {
 	public void setInventario(List<Item> inventario) {
 		this.inventario = inventario;
 	}
+	
+	public void assegnaPrezziCasuali(int prezzoMin, int prezzoMax) {
+		Random random = new Random();
+		for (Item item : inventario) {
+			int prezzo = random.nextInt(prezzoMax - prezzoMin + 1) + prezzoMin;
+			item.setPrice(prezzo);
+		}
+	}
 
 	public void mostraInventario() {
 		System.out.println("Inventario di " + this.getName() + ":");
 		for (int i = 0; i < inventario.size(); i++) {
 			Item item = inventario.get(i);
-			System.out.println((i + 1) + ". " + item.getNome());
+			System.out.println((i + 1) + ". " + item.getNome() + " - Prezzo: " + item.getPrice());
 		}
 	}
 
-	public Item vendi(int index) {
-		if (index >= 0 && index < inventario.size()) {
-			return inventario.get(index);
-		}
-		return null;
+	public boolean vendi(int index, Player giocatore) {
+	    if (index >= 0 && index < inventario.size()) {
+	        Item item = inventario.get(index);
+	        int prezzo = item.getPrice();
+
+	        if (giocatore.getValue() >= prezzo) {
+	           // giocatore.useCoin(prezzo);
+	            giocatore.raccogliItem(item);
+	            inventario.remove(index);  // rimuovo l'item venduto
+	            System.out.println(giocatore.getName() + " ha acquistato " + item.getNome() + " per " + prezzo + " monete.");
+	            return true;
+	        } else {
+	            System.out.println("Non hai abbastanza monete per acquistare " + item.getNome());
+	            return false;
+	        }
+	    }
+	    System.out.println("Indice oggetto non valido.");
+	    return false;
 	}
+	
+	
 
 	@Override
 	public boolean isDead() {
@@ -48,14 +72,13 @@ public class Merchant extends Entity implements Speakable {
 
 	@Override
 	public void speak() {
-		// TODO Auto-generated method stub
+		System.out.println(getName() + " dice: \"" + dialogue + "\"");
 
 	}
 
 	@Override
 	public String getDialogue() {
-		System.out.println(getName() + " dice: \"" + dialogue + "\"");
-		return null;
+		return dialogue;
 	}
 
 }
