@@ -80,6 +80,11 @@ public class Player extends Entity {
 	public void setHasEquippedArmor(boolean hasEquippedArmor) {
 		this.hasEquippedArmor = hasEquippedArmor;
 	}
+	
+	//function that checks if the player is dead or not (HP = 0)
+		public boolean isDead() {
+			return this.getHp() <= 0;
+		}
 
 	//function that removes from the inventory the consumed or null items
 	public void removeConsumedOrNullItemsFromInventory() {
@@ -126,9 +131,52 @@ public class Player extends Entity {
 		return false;
 	}
 	
+	public String showInventory() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("Inventario:\n");
+
+	    for (int i = 0; i < inventory.length; i++) {
+	        Item item = inventory[i];
+	        if (item != null) {
+	            sb.append("Slot ").append(i).append(": ").append(item.getNome()).append("\n");
+	        } else {
+	            sb.append("Slot ").append(i).append(": [vuoto]\n");
+	        }
+	    }
+
+	    return sb.toString();
+	}
+	
+	public <T extends Item> List<T> getItemsByType(Class<T> tipo) {
+	    List<T> risultati = new ArrayList<>();
+
+	    for (Item item : inventory) {
+	        if (tipo.isInstance(item)) {
+	            risultati.add(tipo.cast(item));
+	        }
+	    }
+
+	    return risultati;
+	}
+
+
 	//function that allows the player to increase his health by using a given potion
 	public boolean usePotion(Potion potion) {
 	    if (potion == null) {
+	        return false;
+	    }
+
+	    Item[] inventory = this.getInventory();
+	    boolean trovato = false;
+
+	    for (Item item : inventory) {
+	        if (item == potion) {
+	            trovato = true;
+	            break;
+	        }
+	    }
+
+	    if (!trovato) {
 	        return false;
 	    }
 
@@ -145,8 +193,7 @@ public class Player extends Entity {
 
 	    potion.isUsed();
 
-	    // Rimuove la pozione usata dall'inventario
-	    Item[] inventory = this.getInventory();
+	    // Rimuove la pozione usata dall'inventario (la mette a null)
 	    for (int i = 0; i < inventory.length; i++) {
 	        if (inventory[i] == potion) {
 	            inventory[i] = null;
@@ -155,25 +202,54 @@ public class Player extends Entity {
 	    }
 
 	    removeConsumedOrNullItemsFromInventory();
-
 	    return true;
 	}
-	
-	//function that checks if the player is dead or not (HP = 0)
-	public boolean isDead() {
-		return this.getHp() <= 0;
-	}
-	
+
 	
 	//funciton that allows the player to use a bomb to open a secret door
 	public boolean useBomb(Bomb bomb) {
-		//da implementare
-		return false;
+		if (bomb == null) {
+	        return false;
+	    }
+	    Item[] inventory = this.getInventory();
+	    boolean trovato = false;
+	    for (Item item : inventory) {
+	        if (item == bomb) {
+	            trovato = true;
+	            break;
+	        }
+	    }
+	    if (!trovato) {
+	        return false;
+	    }
+	    
+	    //////////METTERE L'EFFETTO DELLA BOMBA QUI//////////////////'
+	    
+	    bomb.isUsed();
+		
+		// Rimuove la bomba usata dall'inventario (la mette a null)
+	    for (int i = 0; i < inventory.length; i++) {
+	        if (inventory[i] == bomb) {
+	            inventory[i] = null;
+	            break;
+	        }
+	    }
+	    removeConsumedOrNullItemsFromInventory();
+	    return true;
 	}
 	
-	public boolean useCoin() {
-		//da implementare
+	public boolean buyItem(Item item) {
+		if(item == null) {
+			return false;
+		}
+		
+		if(item.getPrice() <= this.getValue() ) {
+			this.setValue(this.getValue() - item.getPrice());
+			return true;
+		}
+		
 		return false;
+		
 	}
 	
 	//function that allows the player to equip a weapon and increase their attack by its damage value
