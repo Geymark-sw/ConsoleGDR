@@ -13,7 +13,7 @@ import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
 
-public class Factory {
+public class FactoryMob {
 
 	private static Random random = new Random();
 
@@ -68,7 +68,6 @@ public class Factory {
 
 	}
 
-	
 	/*
 	 * Creazione Boss, vengono creati Mob in base al case precedente
 	 */
@@ -77,10 +76,10 @@ public class Factory {
 		int atk = 30;
 		int def = 20;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("Diploma ITS",true, 99999999), new Armor("Occhiali del Moni", true, 99999999));
-		
-		
-		return new Boss("Moni Tancini, il Burattinaio delle Ombre", hp, atk, def, drop);
+				new Coin("Crediti formativi", false), new Weapon("Diploma ITS", true, 99999999),
+				new Armor("Occhiali del Moni", true, 99999999));
+
+		return new Boss("Moni Tancini, il Burattinaio delle Ombre", hp, atk, def, drop, "¤₭₰₠₹₩₿₯₫₮₲₸₾₻₶฿৻؋$¢₤₧₥₩");
 	}
 
 	private static Boss creaMara() {
@@ -88,10 +87,11 @@ public class Factory {
 		int atk = 30;
 		int def = 30;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("Spada Rivelatrice",false, 60), new Armor("Occhiali di Mara", false, 60));
-		
-		
-		return new Boss("Mara Pinto, colei che fa tutto ma non fa nulla", hp, atk, def, drop);
+				new Coin("Crediti formativi", false), new Weapon("Spada Rivelatrice", false, 60),
+				new Armor("Occhiali di Mara", false, 60));
+
+		return new Boss("Mara Pinto, colei che fa tutto ma non fa nulla", hp, atk, def, drop,
+				"Chiamate la SEGRETERIAAAA!!!!");
 	}
 
 	private static Boss creaDimitri() {
@@ -99,10 +99,11 @@ public class Factory {
 		int atk = 25;
 		int def = 20;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("Pitone d'ottone",true, 30), new Armor("Polo di Dimitri", true, 30));
-		
-		
-		return new Boss("Dimitri, eeeeh volevi imparare Flask?", hp, atk, def, drop);
+				new Coin("Crediti formativi", false), new Weapon("Pitone d'ottone", true, 30),
+				new Armor("Polo di Dimitri", true, 30));
+
+		return new Boss("Dimitri, eeeeh volevi imparare Flask?", hp, atk, def, drop,
+				"Ė cosi semplice che ci riuscirebbe anche un bambino di quinta elementare");
 	}
 
 	private static Boss creaMariella() {
@@ -110,10 +111,10 @@ public class Factory {
 		int atk = 20;
 		int def = 20;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("La Spada dell'Ozio",false, 20), new Armor("Gambali della discordia", false, 20));
-		
-		
-		return new Boss("Mariella, la nullafacente", hp, atk, def, drop);
+				new Coin("Crediti formativi", false), new Weapon("La Spada dell'Ozio", false, 20),
+				new Armor("Gambali della discordia", false, 20));
+
+		return new Boss("Mariella, la nullafacente", hp, atk, def, drop, "Io non mi occupo di queste cose");
 	}
 
 	private static Boss creaClaudia() {
@@ -121,10 +122,10 @@ public class Factory {
 		int atk = 15;
 		int def = 15;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("Spacca PC",false, 15), new Armor("Scarpe LV", false, 15));
-		
-		
-		return new Boss("Claudia, la raccomandata", hp, atk, def, drop);
+				new Coin("Crediti formativi", false), new Weapon("Spacca PC", false, 15),
+				new Armor("Scarpe LV", false, 15));
+
+		return new Boss("Claudia, la raccomandata", hp, atk, def, drop, "Faccio sempre tutto io");
 	}
 
 	/*

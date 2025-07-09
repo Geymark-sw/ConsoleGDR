@@ -20,7 +20,9 @@ public abstract class Entity {
 		this.def = def;
 	}
 	
-	
+	public boolean isDead() {
+		return hp <=0;
+	}
 
 	public Entity() {
 	}

@@ -18,16 +18,22 @@ public class Mob extends Entity{
 	
 	Random random = new Random();
 	
+	@Override
+	public boolean isDead() {
+		// TODO Auto-generated method stub
+		return super.isDead();
+	}
+	
 	public List<Item> getListDrop() {
-		int maxRange = random.nextInt(6);
-		int i = 0;
-		List<Item> drop = new ArrayList<Item>(); 
-		while (i < maxRange) {
-			Item randomItem = this.getListDrop().get(random.nextInt(this.getListDrop().size()));
-			drop.add(randomItem);
-		}
-		return drop;
-		
+	    int maxRange = random.nextInt(6); // da 0 a 5 oggetti
+	    List<Item> drop = new ArrayList<>();
+
+	    for (int i = 0; i < maxRange && !dropsList.isEmpty(); i++) {
+	        Item randomItem = dropsList.get(random.nextInt(dropsList.size()));
+	        drop.add(randomItem);
+	    }
+
+	    return drop;
 	}
 
 }

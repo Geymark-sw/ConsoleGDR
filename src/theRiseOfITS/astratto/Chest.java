@@ -14,15 +14,11 @@ public abstract class Chest {
 		StaticId++;
 		this.nome = nome;
 		this.oggettiContenuti = oggettiContenuti;
-		
+
 	}
-	
-	
 
 	public Chest() {
 	}
-
-
 
 	public static int getStaticId() {
 		return StaticId;
@@ -51,9 +47,18 @@ public abstract class Chest {
 	public List<Item> getOggettiContenuti() {
 		return oggettiContenuti;
 	}
+	
+    public boolean isEmpty() {
+        return oggettiContenuti == null || oggettiContenuti.isEmpty();
+    }
 
 	public void setOggettiContenuti(List<Item> oggettiContenuti) {
 		this.oggettiContenuti = oggettiContenuti;
+	}
+
+	@Override
+	public String toString() {
+		return "Chest [ Nome=" + nome + ", oggettiContenuti=" + oggettiContenuti.size() + "]";
 	}
 
 	

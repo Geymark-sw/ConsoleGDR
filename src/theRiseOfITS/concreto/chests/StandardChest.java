@@ -12,5 +12,12 @@ public class StandardChest extends Chest{
 		// TODO Auto-generated constructor stub
 	}
 	
+
+    @Override
+    public String toString() {
+        return "Cassa: " + getNome() + " | Contenuto: " + getOggettiContenuti().size() + " oggetti";
+    }
+	
+	
 }
 	
