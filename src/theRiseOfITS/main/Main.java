@@ -16,9 +16,11 @@ public class Main {
 
 		case 1: //Carica una nuova partita
 			//Richiamo sistema di tracciamento delle stanze
+			newGame();
 			break;
 			
 		case 2: //Carico una partita già esistente con i dati salvati in un file
+			continueGame();
 			break;
 			
 		case 3: //Esci dal gioco
@@ -30,6 +32,16 @@ public class Main {
 			//In teoria non dovrebbe mai essere stampato visto che ho fatto i controlli per forzare ad inserire un valore valido 
 			
 		}
+	}
+
+	private static void continueGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void newGame() {
+		//Carica nuova partiata
+		
 	}
 
 	public static int firstMenu() {
