@@ -12,15 +12,14 @@ import theRiseOfITS.concreto.rooms.Direction;
 public abstract class Room {
 	
 	private String name;
+	private boolean isKey = false; 
+	private int x;
+	private int y;
 	
 	private List<Item> items;
 	private List<Entity> npcs;
 	private List<Mob> mobs;
-	
-	private int x = 1;
-	private int y = -1;
 	private Map<Direction, Room> doors;
-	
 	
 	public Room(String name) {
 		
@@ -56,6 +55,10 @@ public abstract class Room {
 
 	public Map<Direction, Room> getDoor() {
 		return this.doors;
+	}
+	
+	public int getNumberofDoors() {
+		return doors.values().size();
 	}
 	
 	/**
@@ -104,6 +107,17 @@ public abstract class Room {
 	public void setMobs(List<Mob> mobs) {
 		this.mobs = mobs;
 	}
+
+	
+	public boolean isKey() {
+		return isKey;
+	}
+
+
+	public void setKey(boolean isKey) {
+		this.isKey = isKey;
+	}
+
 
 	@Override
 	public String toString() {

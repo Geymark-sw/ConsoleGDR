@@ -40,7 +40,7 @@ public class Floor {
 		return initialRoom;
 	}
 
-	public void generateMap(int specialRooms) {
+	public void generateMap() {
 		Random rand = new Random();
 		int totalRooms = rand.nextInt(6, 15);
 		// lista delle stanze disponibili da poter collegare
@@ -52,9 +52,9 @@ public class Floor {
 		rooms.put(initialPoint, initialRoom);
 		list.add(initialRoom);
 
-		int i = 0;
 		// finche il numero di stanze presenti all'interno della mappa è inferiore
 		// al numero di stanze totali desiderate il ciclo continua a crearne di nuove
+		int i = 1;
 		while (rooms.size() < totalRooms) {
 			Room base = list.get(rand.nextInt(list.size()));
 			List<Direction> directions = new ArrayList<>(List.of(Direction.values()));
@@ -77,12 +77,55 @@ public class Floor {
 					break;
 				}
 			}
-			// Nel caso in cui la stanza abbia gia 4 collegamenti la stanza viene eliminata dalla lista
+			// Nel caso in cui la stanza abbia gia 4 collegamenti la stanza viene eliminata
+			// dalla lista
 			// delle stanze possibili da usare
-			if(!joined && list.size()>0) {
+			if (!joined && list.size() > 0) {
+				list.remove(base);
+			}
+			i ++;
+		}
+		
+		Room bossRoom = new BossRoom("Stanza del Boss");
+		Room treasureRoom = new TreasureRoom("Stanza del tesoro");
+		Room merchantRoom = new MerchantRoom("Stanza del mercante");
+		List<Room> specialRooms = new ArrayList<Room>(List.of(bossRoom, treasureRoom, merchantRoom));
+		int numberofSpecialRoom = specialRooms.size();
+		int count = 0;
+		while (count <= numberofSpecialRoom) {
+			Room base = list.get(rand.nextInt(list.size()));
+			List<Direction> directions = new ArrayList<>(List.of(Direction.values()));
+			Collections.shuffle(directions);
+
+			boolean joined = false;
+			for (Direction direction : directions) {
+				Point offset = direction.increment();
+				int nx = base.getX() + offset.x;
+				int ny = base.getY() + offset.y;
+				Point newPoint = new Point(nx, ny);
+				
+				if (!rooms.containsKey(newPoint)) {
+					Room newRoom = specialRooms.get(rand.nextInt(specialRooms.size()));
+					newRoom.setPosition(nx, ny);
+					join(base, direction, newRoom);
+					rooms.put(newPoint, newRoom);
+					specialRooms.remove(newRoom);
+					joined = true;
+					count++;
+					break;
+				}
+			}
+			if (!joined && list.size() > 0) {
 				list.remove(base);
 			}
 		}
+		
+		
+		
+		
+		
+		
+
 	}
 
 	@Override
