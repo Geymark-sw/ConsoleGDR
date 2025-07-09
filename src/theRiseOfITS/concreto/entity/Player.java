@@ -17,9 +17,9 @@ public class Player extends Entity {
 	private int value;
 	private Item[] inventory;
 	private int equippedWeaponDamage = 0;
-	private boolean hasEquippedWeapon = false;
+	private Weapon equippedWeapon = null;
 	private int equippedArmorDefense = 0;
-	private boolean hasEquippedArmor = false;
+	private Armor equippedArmor = null;
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
@@ -57,14 +57,6 @@ public class Player extends Entity {
 		this.equippedWeaponDamage = equippedWeaponDamage;
 	}
 
-	public boolean HasEquippedWeapon() {
-		return hasEquippedWeapon;
-	}
-
-	public void setHasEquippedWeapon(boolean hasEquippedWeapon) {
-		this.hasEquippedWeapon = hasEquippedWeapon;
-	}
-
 	public int getEquippedArmorDefense() {
 		return equippedArmorDefense;
 	}
@@ -73,15 +65,28 @@ public class Player extends Entity {
 		this.equippedArmorDefense = equippedArmorDefense;
 	}
 
-	public boolean HasEquippedArmor() {
-		return hasEquippedArmor;
+	
+	public Weapon getEquippedWeapon() {
+		return equippedWeapon;
 	}
 
-	public void setHasEquippedArmor(boolean hasEquippedArmor) {
-		this.hasEquippedArmor = hasEquippedArmor;
+
+	public void setEquippedWeapon(Weapon equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
 	}
-	
-	//function that checks if the player is dead or not (HP = 0)
+
+
+	public Armor getEquippedArmor() {
+		return equippedArmor;
+	}
+
+
+	public void setEquippedArmor(Armor equippedArmor) {
+		this.equippedArmor = equippedArmor;
+	}
+
+
+		//function that checks if the player is dead or not (HP = 0)
 		public boolean isDead() {
 			return this.getHp() <= 0;
 		}
@@ -147,6 +152,7 @@ public class Player extends Entity {
 	    return sb.toString();
 	}
 	
+	
 	public <T extends Item> List<T> getItemsByType(Class<T> tipo) {
 	    List<T> risultati = new ArrayList<>();
 
@@ -191,7 +197,7 @@ public class Player extends Entity {
 	        this.setHp(this.getHp() + potion.getHp());
 	    }
 
-	    potion.isUsed();
+	    potion.consume();
 
 	    // Rimuove la pozione usata dall'inventario (la mette a null)
 	    for (int i = 0; i < inventory.length; i++) {
@@ -225,7 +231,7 @@ public class Player extends Entity {
 	    
 	    //////////METTERE L'EFFETTO DELLA BOMBA QUI//////////////////'
 	    
-	    bomb.isUsed();
+	    bomb.consume();
 		
 		// Rimuove la bomba usata dall'inventario (la mette a null)
 	    for (int i = 0; i < inventory.length; i++) {
@@ -258,8 +264,8 @@ public class Player extends Entity {
 	        return false;
 	    }
 	    //check if the player has already equipped a weapon
-	    if(this.hasEquippedWeapon) {
-	    	this.unequipWeapon();
+	    if(this.getEquippedWeapon() != null) {
+	    	this.unequipWeapon(this.getEquippedWeapon());
 	    }
 	    
 	 //check if the weapon is in the inventory
@@ -277,35 +283,40 @@ public class Player extends Entity {
 	        return false;
 	    }
 	    //increase the player atk by the weapon
-	    this.setHasEquippedWeapon(true);
+	    this.setEquippedWeapon(weapon);
+	    weapon.equip();
 	    this.setEquippedWeaponDamage(weapon.getDamage());
 	    this.setAtk(this.getAtk()+this.getEquippedWeaponDamage());
 	    return true;
 	}
 	
-	public boolean unequipWeapon() {
+	public boolean unequipWeapon(Weapon weapon) {
 		//controllo se ho un arma equipaggiata
-		if(!this.hasEquippedWeapon) {
-			return false;
+		if(this.getEquippedWeapon() == null) {
+			return false; //non hai armi equipaggiate
 		}
-		//tolgo l'attacco dell'arma dall'attacco del player
-		this.setHasEquippedWeapon(false);
-		this.setAtk(this.getAtk()-this.getEquippedWeaponDamage());
-		this.setEquippedWeaponDamage(0);
-		return true;
+		
+		if(this.getEquippedWeapon().equals(weapon)) {
+			//tolgo l'attacco dell'arma dall'attacco del player e disequipaggio l'arma
+			this.setAtk(this.getAtk()-this.getEquippedWeaponDamage());
+			this.setEquippedWeapon(null);
+			weapon.setEquipped(false);//bruteforce perchè weapon non ha il metodo unequip
+			this.setEquippedWeaponDamage(0);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean equipArmor(Armor armor) {
 		if (armor == null) {
 	        return false;
 	    }
-		
-		//check if the player has already equipped a weapon
-	    if(this.hasEquippedArmor) {
-	    	this.unequipArmor();
+	    //check if the player has already equipped an armor
+	    if(this.getEquippedArmor() != null) {
+	    	this.unequipArmor(this.getEquippedArmor());
 	    }
 	    
-	    // Verifico che l'armatura sia presente nell'inventario
+	 //check if the armor is in the inventory
 	    Item[] inventory = this.getInventory();
 	    boolean trovato = false;
 	    
@@ -319,23 +330,33 @@ public class Player extends Entity {
 	    if (!trovato) {
 	        return false;
 	    }
-	    //Aggiungo la difesa dell'armatura alla difesa base del player
-	    this.setHasEquippedArmor(true);
+	    //increase the player armor by the armor's defence
+	    this.setEquippedArmor(armor);
+	    armor.equip();
 	    this.setEquippedArmorDefense(armor.getDefense());
 	    this.setDef(this.getDef()+this.getEquippedArmorDefense());
 	    return true;
 	}
 	
-	public boolean unequipArmor() {
-		//controllo se ho un armatura equipaggiata
-		if(!this.hasEquippedArmor) {
-			return false;
+	public boolean unequipArmor(Armor armor) {
+		//controllo se ho un arma equipaggiata
+		if(this.getEquippedArmor() == null) {
+			return false; //non hai armature equipaggiate
 		}
-		//tolgo l'attacco dell'arma dall'attacco del player
-		this.setHasEquippedArmor(false);
-		this.setDef(this.getDef()-this.getEquippedArmorDefense());
-		this.setEquippedArmorDefense(0);
-		return true;
+		
+		if(this.getEquippedArmor().equals(armor)) {
+			//tolgo l'attacco dell'arma dall'attacco del player
+			this.setDef(this.getDef()-this.getEquippedArmorDefense());
+			this.setEquippedArmor(null);
+			armor.setEquipped(false);//bruteforce perchè armor non ha il metodo unequip
+			this.setEquippedArmorDefense(0);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean discardItem(Item item) {
+		if (item == null && 
 	}
 	
 	
