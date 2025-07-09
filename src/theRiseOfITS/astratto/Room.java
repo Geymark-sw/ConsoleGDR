@@ -1,55 +1,81 @@
 package theRiseOfITS.astratto;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import theRiseOfITS.concreto.entity.Mob;
+import theRiseOfITS.concreto.rooms.Direction;
 
 
 public abstract class Room {
 	
-	private static int idStatico = 0;
-	private int id;
 	private String name;
+	
 	private List<Item> items;
 	private List<Entity> npcs;
 	private List<Mob> mobs;
 	
+	private int x = 1;
+	private int y = -1;
+	private Map<Direction, Room> doors;
 	
-	public Room(String name, List<Item> items, List<Entity> npcs, List<Mob> mobs) {
-		super();
-		this.id = idStatico;
-		idStatico ++;
-		this.name = name;
-		this.items = items;
-		this.npcs = npcs;
-		this.mobs = mobs;
-	}
 	
-
-	public Room() {
+	public Room(String name) {
 		
+		this.name = name;
+		this.items = new ArrayList<Item>();
+		this.npcs = new ArrayList<Entity>();
+		this.mobs = new ArrayList<Mob>();
+		this.doors = new EnumMap<>(Direction.class);
 	}
-
-	public int getId() {
-		return id;
-	}
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 
 	public String getName() {
 		return name;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	/**
+	 * Check if a door can be added to a room
+	 * @param dir direction
+	 * @param dest destination
+	 * @return
+	 */
+	public boolean addDoor(Direction dir, Room dest) {
+		// Controlla se la stanza ha gia 4 porte collegate oppure
+		// se la porta è stata gia collegata ad un'altra stanza
+		if (doors.size() >= 4 || doors.containsKey(dir)) {
+			return false;
+		}
+		doors.put(dir, dest);
+		return true;
 	}
 
 
+	public Map<Direction, Room> getDoor() {
+		return this.doors;
+	}
+	
+	/**
+	 * set the position of the room 
+	 * @param x 
+	 * @param y
+	 */
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
 	public List<Item> getItems() {
 		return items;
 	}

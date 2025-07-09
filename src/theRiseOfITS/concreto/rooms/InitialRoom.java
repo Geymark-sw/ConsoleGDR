@@ -4,6 +4,6 @@ import theRiseOfITS.astratto.Room;
 
 public class InitialRoom extends Room {
 	public InitialRoom(String name) {
-		this.setName(name);
+		super(name);
 	}
 }
