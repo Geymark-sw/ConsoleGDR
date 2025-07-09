@@ -356,7 +356,8 @@ public class Player extends Entity {
 	}
 	
 	public boolean discardItem(Item item) {
-		if (item == null && 
+		//da implementare
+		return false;
 	}
 	
 	
