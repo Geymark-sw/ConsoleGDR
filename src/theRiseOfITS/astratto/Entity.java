@@ -28,7 +28,6 @@ public abstract class Entity {
 	}
 
 
-
 	public int getId() {
 		return id;
 	}
@@ -71,7 +70,7 @@ public abstract class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [id=" + id + ", name=" + name + ", hp=" + hp + ", atk=" + atk + ", def=" + def + "]";
+		return "Entity [ name=" + name + ", hp=" + hp + ", atk=" + atk + ", def=" + def + "]";
 	}
 	
 	//function that allows an entity to do damage to a given mob, 
