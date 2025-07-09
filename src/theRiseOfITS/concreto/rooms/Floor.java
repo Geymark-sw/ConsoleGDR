@@ -10,26 +10,24 @@ import java.util.Random;
 import theRiseOfITS.astratto.Room;
 
 public class Floor {
-	
+
 	private String name;
-	private Map<String, Room> rooms = new HashMap<String, Room>(); 
+	private Map<Point, Room> rooms = new HashMap<Point, Room>();
 	private Room initialRoom;
-	private Map<String, Point> coordinates = new HashMap<>();
-	
-	
+
 	public Floor(String name) {
-		
+
 		this.name = name;
 	}
 
 	/**
 	 * 
-	 * @param a Room of where you are
+	 * @param a   Room of where you are
 	 * @param dir Direction of the door
-	 * @param b Room of where you want to be
+	 * @param b   Room of where you want to be
 	 */
 	public void join(Room a, Direction dir, Room b) {
-		if(a.addDoor(dir, b)) {
+		if (a.addDoor(dir, b)) {
 			b.addDoor(dir.opposite(), a);
 		}
 	}
@@ -44,49 +42,52 @@ public class Floor {
 
 	public void generateMap(int specialRooms) {
 		Random rand = new Random();
-		int totalRooms = rand.nextInt(11);
+		int totalRooms = rand.nextInt(6, 15);
+		// lista delle stanze disponibili da poter collegare
 		List<Room> list = new ArrayList<Room>();
-		
 		initialRoom = new InitialRoom("Stanza Iniziale");
-		rooms.put(initialRoom.getName(), initialRoom);
+
+		initialRoom.setPosition(0, 0);
+		Point initialPoint = new Point(0, 0);
+		rooms.put(initialPoint, initialRoom);
 		list.add(initialRoom);
-		
-		for (int i = 0; i < totalRooms; i++) {
-			Room newRoom = new RandomRoom("Stanza_" + i);
-			Room joinRoom = list.get(rand.nextInt(list.size()));
-			
+
+		int i = 0;
+		// finche il numero di stanze presenti all'interno della mappa è inferiore
+		// al numero di stanze totali desiderate il ciclo continua a crearne di nuove
+		while (rooms.size() < totalRooms) {
+			Room base = list.get(rand.nextInt(list.size()));
 			List<Direction> directions = new ArrayList<>(List.of(Direction.values()));
 			Collections.shuffle(directions);
-			
+
 			boolean joined = false;
 			for (Direction direction : directions) {
-				//nel caso in cui la stanza non ha una porta collegata in quella direzione 
-				if(!joinRoom.getDoor().containsKey(directions)) {
-					//colleghi una nuova stanza alla stanza attuale
-					join(joinRoom, direction, newRoom);
+				Point offset = direction.increment();
+				int nx = base.getX() + offset.x;
+				int ny = base.getY() + offset.y;
+				Point newPoint = new Point(nx, ny);
+
+				if (!rooms.containsKey(newPoint)) {
+					Room newRoom = new RandomRoom("Stanza_" + i);
+					newRoom.setPosition(nx, ny);
+					join(base, direction, newRoom);
+					rooms.put(newPoint, newRoom);
 					list.add(newRoom);
-					rooms.put(newRoom.getName(), newRoom);
 					joined = true;
 					break;
-					
 				}
 			}
-			// nel caso non dovessi riuscire a collegare la stanza riprova
-			if(!joined) {
-				i--;
+			// Nel caso in cui la stanza abbia gia 4 collegamenti la stanza viene eliminata dalla lista
+			// delle stanze possibili da usare
+			if(!joined && list.size()>0) {
+				list.remove(base);
 			}
 		}
-		
-		int changed = 0;
-		for (Room room : list) {
-			
-		}
-		
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Floor [name=" + name + "]";
 	}
-	
+
 }
