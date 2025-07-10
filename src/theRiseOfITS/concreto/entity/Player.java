@@ -474,12 +474,25 @@ public class Player extends Entity {
 	}
 
 	public String examineRoom(Room room) {
-		String stampa = "";
-		List<Item> oggettiPerTerra = room.getItems();
-		//Se i mob attaccano il giocatore immediatamente, esaminare quali mob ci sono è inutile
-		List<Mob> mobNellaStanza = room.getMobs();
-		stampa = stampa + "A terra trovi i seguenti oggetti: " + oggettiPerTerra + "\nE questi mob: " + mobNellaStanza;
-		return stampa;
+		StringBuilder sb = new StringBuilder();
+	    sb.append("Stanza: ").append(room.getName()).append("\n");
+
+	    if (room.getMobs() != null) {
+	        sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
+	    } else {
+	        sb.append("Non ci sono nemici qui.\n");
+	    }
+
+	    if (room.getItems() != null && !room.getItems().isEmpty()) {
+	        sb.append("Oggetti trovati:\n");
+	        for (Item item : room.getItems()) {
+	            sb.append("- ").append(item.getNome()).append("\n");
+	        }
+	    } else {
+	        sb.append("Non ci sono oggetti nella stanza.\n");
+	    }
+
+	    return sb.toString();
 	}
 	
 	
