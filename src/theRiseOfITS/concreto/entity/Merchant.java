@@ -41,7 +41,7 @@ public class Merchant extends Entity implements Speakable {
 			System.out.println((i + 1) + ". " + item.getNome() + " - Prezzo: " + item.getPrice());
 		}
 	}
-
+	
 	public boolean vendi(int index, Player giocatore) {
 	    if (index >= 0 && index < inventario.size()) {
 	        Item item = inventario.get(index);
