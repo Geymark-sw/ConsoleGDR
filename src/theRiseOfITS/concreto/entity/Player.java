@@ -355,8 +355,28 @@ public class Player extends Entity {
 		return false;
 	}
 	
-	public boolean discardItem(Item item) {
-		//da implementare
+	public boolean discardItemFromInventory(Item item) {
+		if(item == null) {
+			return false; //oggetto nullo
+		}
+		
+		if(item.equals(this.equippedArmor) || item.equals(this.equippedWeapon)) {
+			return false; //impossibile scartare un oggetto equipaggiato	
+		}
+		
+		if(item.isKey()) {
+			return false; //impossibile scartare un oggetto chiave
+		}
+		
+		else {
+			for (int i = 0; i < inventory.length; i++) {
+				if(item.equals(inventory[i])) {
+					inventory[i] = null;
+					removeConsumedOrNullItemsFromInventory();
+					return true; //oggetto rimosso con successo
+				}
+			}
+		}
 		return false;
 	}
 	
