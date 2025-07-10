@@ -124,10 +124,12 @@ public class Player extends Entity {
 		if(item instanceof Coin) {
 			((Coin) item).consume();
 			this.value += ((Coin) item).getValue();
+			System.out.println("Hai raccolto "+ ((Coin) item).getValue() + " monete!");
 		} else {
 			for(int i=0; i<this.inventory.length; i++) {
 				if(this.inventory[i] == null) {
 					this.inventory[i] = item;
+					System.out.println("Hai raccolto "+ item +"!");
 					return true;
 				}
 					
@@ -169,6 +171,7 @@ public class Player extends Entity {
 	//function that allows the player to increase his health by using a given potion
 	public boolean usePotion(Potion potion) {
 	    if (potion == null) {
+	    	System.out.println("Errore, pozione non trovata");
 	        return false;
 	    }
 
@@ -183,10 +186,12 @@ public class Player extends Entity {
 	    }
 
 	    if (!trovato) {
+	    	System.out.println("Pozione non trovata nell'inventario");
 	        return false;
 	    }
 
 	    if (this.getHp() >= 100) {
+	    	System.out.println("Hai già la salute al massimo!");
 	        return false;
 	    }
 
@@ -208,6 +213,7 @@ public class Player extends Entity {
 	    }
 
 	    removeConsumedOrNullItemsFromInventory();
+	    System.out.println("Usi "+potion.getNome()+"!, la tua salute ora è "+this.getHp()+"hp");
 	    return true;
 	}
 
@@ -215,6 +221,7 @@ public class Player extends Entity {
 	//funciton that allows the player to use a bomb to open a secret door
 	public boolean useBomb(Bomb bomb) {
 		if (bomb == null) {
+			System.out.println("Errore, bomba non trovata");
 	        return false;
 	    }
 	    Item[] inventory = this.getInventory();
@@ -226,6 +233,7 @@ public class Player extends Entity {
 	        }
 	    }
 	    if (!trovato) {
+	    	System.out.println("Bomba non trovata nell'inventario");
 	        return false;
 	    }
 	    
@@ -241,19 +249,22 @@ public class Player extends Entity {
 	        }
 	    }
 	    removeConsumedOrNullItemsFromInventory();
+	    System.out.println("Usi "+bomb.getNome()+"!");
 	    return true;
 	}
 	
 	public boolean buyItem(Item item) {
 		if(item == null) {
+			System.out.println("Errore, item non trovato");
 			return false;
 		}
 		
 		if(item.getPrice() <= this.getValue() ) {
 			this.setValue(this.getValue() - item.getPrice());
+			System.out.println("Hai acquistato "+item.getNome()+"!");
 			return true;
 		}
-		
+		System.out.println("Non hai abbastanza soldi!");
 		return false;
 		
 	}
@@ -261,6 +272,7 @@ public class Player extends Entity {
 	//function that allows the player to equip a weapon and increase their attack by its damage value
 	public boolean equipWeapon(Weapon weapon) {
 	    if (weapon == null) {
+	    	System.out.println("Errore, arma non trovata");
 	        return false;
 	    }
 	    //check if the player has already equipped a weapon
@@ -280,6 +292,7 @@ public class Player extends Entity {
 	    }
 
 	    if (!trovato) {
+	    	System.out.println("Arma non trovata nell'inventario");
 	        return false;
 	    }
 	    //increase the player atk by the weapon
@@ -287,6 +300,7 @@ public class Player extends Entity {
 	    weapon.equip();
 	    this.setEquippedWeaponDamage(weapon.getDamage());
 	    this.setAtk(this.getAtk()+this.getEquippedWeaponDamage());
+	    System.out.println("Equipaggi "+weapon.getNome()+"!, il tuo attacco aumenta a "+this.getAtk()+" atk");
 	    return true;
 	}
 	
@@ -302,6 +316,7 @@ public class Player extends Entity {
 			this.setEquippedWeapon(null);
 			weapon.setEquipped(false);//bruteforce perchè weapon non ha il metodo unequip
 			this.setEquippedWeaponDamage(0);
+			System.out.println("Disequipaggi "+weapon.getNome()+", il tuo attacco diminuisce a "+this.getAtk()+" atk");
 			return true;
 		}
 		return false;
@@ -309,6 +324,7 @@ public class Player extends Entity {
 
 	public boolean equipArmor(Armor armor) {
 		if (armor == null) {
+			System.out.println("Errore, armatura non trovata");
 	        return false;
 	    }
 	    //check if the player has already equipped an armor
@@ -328,6 +344,7 @@ public class Player extends Entity {
 	    }
 
 	    if (!trovato) {
+	    	System.out.println("Armatura non trovata nell'inventario");
 	        return false;
 	    }
 	    //increase the player armor by the armor's defence
@@ -335,6 +352,7 @@ public class Player extends Entity {
 	    armor.equip();
 	    this.setEquippedArmorDefense(armor.getDefense());
 	    this.setDef(this.getDef()+this.getEquippedArmorDefense());
+	    System.out.println("Equipaggi "+armor.getNome()+"!, la tua difesa aumenta a "+this.getDef()+" def");
 	    return true;
 	}
 	
@@ -350,6 +368,7 @@ public class Player extends Entity {
 			this.setEquippedArmor(null);
 			armor.setEquipped(false);//bruteforce perchè armor non ha il metodo unequip
 			this.setEquippedArmorDefense(0);
+			System.out.println("Disequipaggi "+armor.getNome()+", la tua difesa scende a "+this.getDef()+" def");
 			return true;
 		}
 		return false;
@@ -357,14 +376,17 @@ public class Player extends Entity {
 	
 	public boolean discardItemFromInventory(Item item) {
 		if(item == null) {
+			System.out.println("Errore, item non trovato");
 			return false; //oggetto nullo
 		}
 		
 		if(item.equals(this.equippedArmor) || item.equals(this.equippedWeapon)) {
+			System.out.println("Non puoi scartare un oggetto equipaggiato!");
 			return false; //impossibile scartare un oggetto equipaggiato	
 		}
 		
 		if(item.isKey()) {
+			System.out.println("Non puoi scartare un oggetto chiave!");
 			return false; //impossibile scartare un oggetto chiave
 		}
 		
@@ -373,6 +395,7 @@ public class Player extends Entity {
 				if(item.equals(inventory[i])) {
 					inventory[i] = null;
 					removeConsumedOrNullItemsFromInventory();
+					System.out.println("Hai scartato "+item.getNome());
 					return true; //oggetto rimosso con successo
 				}
 			}
