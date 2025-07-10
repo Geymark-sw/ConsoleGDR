@@ -92,7 +92,7 @@ public class Floor {
 		List<Room> specialRooms = new ArrayList<Room>(List.of(bossRoom, treasureRoom, merchantRoom));
 		int numberofSpecialRoom = specialRooms.size();
 		int count = 0;
-		while (count <= numberofSpecialRoom) {
+		while (count < numberofSpecialRoom) {
 			Room base = list.get(rand.nextInt(list.size()));
 			List<Direction> directions = new ArrayList<>(List.of(Direction.values()));
 			Collections.shuffle(directions);
@@ -109,7 +109,8 @@ public class Floor {
 					newRoom.setPosition(nx, ny);
 					join(base, direction, newRoom);
 					rooms.put(newPoint, newRoom);
-					specialRooms.remove(newRoom);
+					//specialRooms.remove(newRoom);
+					specialRooms.removeIf(r -> r.getName().equals(newRoom.getName()));
 					joined = true;
 					count++;
 					break;

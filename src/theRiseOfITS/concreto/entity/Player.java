@@ -2,6 +2,8 @@ package theRiseOfITS.concreto.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
@@ -11,6 +13,7 @@ import theRiseOfITS.concreto.items.Bomb;
 import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
+import theRiseOfITS.concreto.rooms.Direction;
 
 public class Player extends Entity {
 	
@@ -20,6 +23,7 @@ public class Player extends Entity {
 	private Weapon equippedWeapon = null;
 	private int equippedArmorDefense = 0;
 	private Armor equippedArmor = null;
+	private Room currentRoom;
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
@@ -84,12 +88,21 @@ public class Player extends Entity {
 	public void setEquippedArmor(Armor equippedArmor) {
 		this.equippedArmor = equippedArmor;
 	}
+	
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
 
 
-		//function that checks if the player is dead or not (HP = 0)
-		public boolean isDead() {
-			return this.getHp() <= 0;
-		}
+	public void setCurrentRoom(Room currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+
+
+	//function that checks if the player is dead or not (HP = 0)
+	public boolean isDead() {
+		return this.getHp() <= 0;
+	}
 
 	//function that removes from the inventory the consumed or null items
 	public void removeConsumedOrNullItemsFromInventory() {
@@ -403,12 +416,49 @@ public class Player extends Entity {
 		return false;
 	}
 	
-	
-	//function that allows the player to change rooms
-	public void changeRoom() {
-		//da implementare
+	public void chooseAndChangeRoom() {
+	    if (currentRoom == null) {
+	        System.out.println("Errore: non sei in nessuna stanza.");
+	        return;
+	    }
+
+	    Map<Direction, Room> doors = currentRoom.getDoor();
+	    if (doors.isEmpty()) {
+	        System.out.println("Non ci sono uscite disponibili.");
+	        return;
+	    }
+
+	    System.out.println("Dove vuoi andare? Uscite disponibili:");
+	    List<Direction> options = new ArrayList<>(doors.keySet());
+	    for (int i = 0; i < options.size(); i++) {
+	        Direction dir = options.get(i);
+	        Room next = doors.get(dir);
+	        System.out.println(i + 1 + ". " + dir + " → " + next.getName());
+	    }
+
+	    Scanner scanner = new Scanner(System.in);
+	    int choice = -1;
+
+	    while (choice < 1 || choice > options.size()) {
+	        System.out.print("Inserisci il numero della direzione: ");
+	        if (scanner.hasNextInt()) {
+	            choice = scanner.nextInt();
+	        } else {
+	            scanner.next(); // Consuma input errato
+	        }
+
+	        if (choice < 1 || choice > options.size()) {
+	            System.out.println("Scelta non valida. Riprova.");
+	        }
+	    }
+
+	    Direction selectedDir = options.get(choice - 1);
+	    Room nextRoom = currentRoom.getConnectedRoom(selectedDir);
+	    this.setCurrentRoom(nextRoom);
+
+	    System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
 	}
-	
+
 	
 	public String examineRoom(Room room) {
 		String stampa = "";

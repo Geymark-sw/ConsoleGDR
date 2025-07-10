@@ -117,6 +117,10 @@ public abstract class Room {
 	public void setKey(boolean isKey) {
 		this.isKey = isKey;
 	}
+	
+	public Room getConnectedRoom(Direction direction) {
+	    return doors.get(direction); // null se non esiste
+	}
 
 
 	@Override
