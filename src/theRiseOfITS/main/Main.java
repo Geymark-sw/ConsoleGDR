@@ -2,6 +2,10 @@ package theRiseOfITS.main;
 
 import java.util.Scanner;
 
+
+import theRiseOfITS.concreto.entity.Player;
+import theRiseOfITS.concreto.rooms.Floor;
+
 public class Main {
 
 	private static Scanner input = new Scanner(System.in);
@@ -41,6 +45,28 @@ public class Main {
 
 	private static void newGame() {
 		//Carica nuova partiata
+		System.out.println("Come vuoi chiamarti?");
+		String name = input.nextLine();
+		Player player = new Player(name);
+		Floor floor = new Floor("Piano terra");
+		floor.generateMap();
+		player.setCurrentFloor(floor);
+		player.setCurrentRoom(floor.getInitialRoom());
+		
+		System.out.println("Ti trovi al Piano terra");
+		boolean runningGame = true;
+		while(runningGame && !player.isDead()) {
+			System.out.println("\n============ MENU ==========");
+			System.out.println("1. Esamina stanza");
+			System.out.println("2. Mostra inventario");
+			System.out.println("3. Cambia stanza");
+			System.out.println("4. Esci dal gioco");
+			
+			int choice = input.nextInt();
+			
+			//switch()
+			
+		}
 		
 	}
 

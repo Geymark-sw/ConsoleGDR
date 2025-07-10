@@ -14,6 +14,7 @@ import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
 import theRiseOfITS.concreto.rooms.Direction;
+import theRiseOfITS.concreto.rooms.Floor;
 
 public class Player extends Entity {
 	
@@ -24,6 +25,7 @@ public class Player extends Entity {
 	private int equippedArmorDefense = 0;
 	private Armor equippedArmor = null;
 	private Room currentRoom;
+	private Floor currentFloor;
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
@@ -96,6 +98,18 @@ public class Player extends Entity {
 
 	public void setCurrentRoom(Room currentRoom) {
 		this.currentRoom = currentRoom;
+	}
+	
+	
+
+
+	public Floor getCurrentFloor() {
+		return currentFloor;
+	}
+
+
+	public void setCurrentFloor(Floor currentFloor) {
+		this.currentFloor = currentFloor;
 	}
 
 
