@@ -15,6 +15,7 @@ import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
 import theRiseOfITS.concreto.rooms.Direction;
 import theRiseOfITS.concreto.rooms.Floor;
+import theRiseOfITS.mechanics.CombatSystem;
 
 public class Player extends Entity {
 	
@@ -471,6 +472,13 @@ public class Player extends Entity {
 	    this.setCurrentRoom(nextRoom);
 
 	    System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
+	    
+	 // Avvia combattimento se ci sono mob
+	    if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
+	        List<Entity> nemici = new ArrayList<>(nextRoom.getMobs());
+	        CombatSystem combat = new CombatSystem(this, nemici);
+	        combat.startCombat();
+	    }
 	}
 
 	public String examineRoom(Room room) {
