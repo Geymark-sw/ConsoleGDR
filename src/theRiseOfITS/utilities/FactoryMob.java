@@ -166,6 +166,6 @@ public class FactoryMob {
 		int def = 10 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba piccola", false, 10), new Potion("Pozione piccola", false, 10),
 				new Coin("Crediti formativi", false));
-		return new Mob("Studente Armellini", hp, atk, def, drop);
+		return new Mob("Segretaria Its", hp, atk, def, drop);
 	}
 }

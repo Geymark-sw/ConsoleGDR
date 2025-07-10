@@ -477,7 +477,7 @@ public class Player extends Entity {
 		StringBuilder sb = new StringBuilder();
 	    sb.append("Stanza: ").append(room.getName()).append("\n");
 
-	    if (room.getMobs() != null) {
+	    if (room.getMobs() != null && !room.getMobs().isEmpty()) {
 	        sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
 	    } else {
 	        sb.append("Non ci sono nemici qui.\n");
