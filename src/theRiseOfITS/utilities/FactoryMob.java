@@ -50,21 +50,23 @@ public class FactoryMob {
 		}
 	}
 
-	// in base al numero entriamo nel case che ci
+	// in base alla stringa entriamo nel case che ci
 	// darà il rispettivo Boss
-	public static Boss getBossPerLevel(int livello) {
-		switch (livello) {
-		case 1:
+	public static Boss getBossPerLevel(String nomeLivello) {
+		switch (nomeLivello) {
+		case "Piano terra":
 			return creaClaudia();
-		case 2:
+		case "Palazzo Accademia Informatica":
 			return creaMariella();
-		case 3:
+		case "SMI":
 			return creaDimitri();
-		case 4:
+		case "Altopiano ITS":
 			return creaMara();
-		default:
-			return creaMoniTancini(); // livello 5+
+		case "﷼₽₾₷₴௹₯€₫":
+			return creaMoniTancini();
+
 		}
+		return null;
 
 	}
 

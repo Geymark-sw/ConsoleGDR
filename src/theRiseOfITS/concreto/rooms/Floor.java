@@ -10,7 +10,7 @@ import java.util.Random;
 import theRiseOfITS.astratto.Room;
 
 public class Floor {
-
+	//il nome indica il livello del piano
 	private String name;
 	private Map<Point, Room> rooms = new HashMap<Point, Room>();
 	private Room initialRoom;
@@ -35,6 +35,7 @@ public class Floor {
 	public String getName() {
 		return name;
 	}
+	
 
 	public Room getInitialRoom() {
 		return initialRoom;
@@ -85,8 +86,8 @@ public class Floor {
 			}
 			i ++;
 		}
-		
-		Room bossRoom = new BossRoom("Stanza del Boss");
+		//passo anche il livello perche il boss cambia in base al livello in cui ci troviamo
+		Room bossRoom = new BossRoom("Stanza del Boss",name);
 		Room treasureRoom = new TreasureRoom("Stanza del tesoro");
 		Room merchantRoom = new MerchantRoom("Stanza del mercante");
 		List<Room> specialRooms = new ArrayList<Room>(List.of(bossRoom, treasureRoom, merchantRoom));
