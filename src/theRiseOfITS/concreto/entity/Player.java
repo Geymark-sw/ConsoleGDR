@@ -459,7 +459,6 @@ public class Player extends Entity {
 	    System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
 	}
 
-	
 	public String examineRoom(Room room) {
 		String stampa = "";
 		List<Item> oggettiPerTerra = room.getItems();
