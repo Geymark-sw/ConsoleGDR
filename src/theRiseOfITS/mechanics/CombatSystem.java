@@ -63,6 +63,7 @@ public class CombatSystem {
         // Se il nemico è morto, rimuovilo dalla lista
         if (nemicoScelto.isDead()) {
             System.out.println(nemicoScelto.getName() + " è stato sconfitto!");
+            nemicoScelto.setHp(0);
             nemici.remove(nemicoScelto);
         }
     }

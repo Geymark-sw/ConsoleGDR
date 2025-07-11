@@ -168,25 +168,53 @@ public class Player extends Entity {
 	}
 	
 	public boolean openChest(Chest chest) {
-		if (chest == null) {
-			return false;
-		}
-		
-		if (chest.getOggettiContenuti().isEmpty()) {
-			System.out.println("Apri la chest, ma è vuota!");
-			return true;
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		if (chest.getOggettiContenuti() != null && !chest.getOggettiContenuti().isEmpty()) {
-	        sb.append("Oggetti trovati:\n");
-	        for (Item item : chest.getOggettiContenuti()) {
-	            sb.append("- ").append(item.getNome()).append("\n");
-	        }
-	        System.out.println(sb.toString());
-		}
-		return false;
+	    if (chest == null) {
+	        return false;
+	    }
+
+	    if (chest.getOggettiContenuti().isEmpty()) {
+	        System.out.println("Apri la chest, ma è vuota!");
+	        return true;
+	    }
+
+	    Scanner scanner = new Scanner(System.in);
+
+	    List<Item> oggetti = new ArrayList<>(chest.getOggettiContenuti());
+	    System.out.println("Hai aperto la chest. Contiene i seguenti oggetti:");
+
+	    for (int i = 0; i < oggetti.size(); i++) {
+	        Item item = oggetti.get(i);
+	        System.out.println((i + 1) + ". " + item.getNome());
+	    }
+
+	    for (int i = 0; i < oggetti.size(); i++) {
+	        Item item = oggetti.get(i);
+	        String risposta = "";
+
+	        do {
+	            System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
+	            risposta = scanner.nextLine().trim().toLowerCase();
+
+	            if (risposta.equals("s")) {
+	                boolean raccolto = pickupItem(item);
+	                if (raccolto) {
+	                    chest.getOggettiContenuti().remove(item); // rimuoviamo l'oggetto dalla chest solo se raccolto
+	                    i--; // aggiornamento per evitare salti nella lista dopo la rimozione
+	                } else {
+	                    System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
+	                }
+	            } else if (risposta.equals("n")) {
+	                System.out.println("Hai deciso di lasciare '" + item.getNome() + "' nella chest.");
+	            } else {
+	                System.out.println("Input non valido. Digita 's' per sì o 'n' per no.");
+	            }
+
+	        } while (!risposta.equals("s") && !risposta.equals("n"));
+	    }
+
+	    return true;
 	}
+
 		
 	
 	public String showInventory() {
