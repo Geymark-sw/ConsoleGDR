@@ -1,10 +1,8 @@
 package theRiseOfITS.concreto.rooms;
 
-import java.util.List;
 
 import theRiseOfITS.astratto.Room;
 import theRiseOfITS.concreto.entity.Boss;
-import theRiseOfITS.concreto.entity.Mob;
 import theRiseOfITS.utilities.FactoryMob;
 
 public class BossRoom extends Room {
