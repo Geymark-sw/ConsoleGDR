@@ -32,7 +32,7 @@ public class Player extends Entity {
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
-		super(name, 100, 10, 5); // esempio: 100 HP, 10 ATK, 5 DEF
+		super(name, 1000000, 1000000, 5); // esempio: 100 HP, 10 ATK, 5 DEF
 		this.inventory = new Item[10];
 		this.value = 0;
 

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.concreto.entity.Player;
+import theRiseOfITS.concreto.rooms.BossRoom;
 
 public class CombatSystem {
     private Player player;
@@ -116,12 +117,24 @@ public class CombatSystem {
         System.out.println("\n--- FINE COMBATTIMENTO ---");
         if (!player.isDead()) {
             System.out.println("VITTORIA! Hai sconfitto tutti i nemici.");
-         // 🔥 Rimuove i mob sconfitti dalla stanza attuale
+
+            // Rimuove i mob normali sconfitti
             if (player.getCurrentRoom() != null) {
                 player.getCurrentRoom().rimuoviMobSconfitti();
             }
+
+            // Se è una BossRoom e il boss è morto, rimuovilo
+            if (player.getCurrentRoom() instanceof BossRoom bossRoom) {
+                if (bossRoom.getBoss() != null && bossRoom.getBoss().isDead()) {
+                    System.out.println("🏆 Hai sconfitto il Boss di questo livello!");
+                    bossRoom.rimuoviBossSconfitti();
+                    // 🔁 qui potresti attivare un flag globale o notificare al GameManager che si può salire di livello
+                }
+            }
+
         } else {
             System.out.println("SCONFITTA! Sei stato battuto.");
         }
     }
+
 }
