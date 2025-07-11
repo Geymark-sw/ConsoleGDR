@@ -158,6 +158,7 @@ public class Player extends Entity {
 			for(int i=0; i<this.inventory.length; i++) {
 				if(this.inventory[i] == null) {
 					this.inventory[i] = item;
+					item.setRaccolto(true);
 					System.out.println("Hai raccolto "+ item +"!");
 					return true;
 				}

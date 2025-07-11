@@ -34,6 +34,7 @@ public abstract class Item {
 	private String nome;
 	private int price = 0;
 	private boolean key; // if it is a key item for the lore
+	private boolean raccolto = false;
 	
 	public Item( String nome, boolean key) {
 		super();
@@ -78,6 +79,15 @@ public abstract class Item {
 		return price;
 	}
 	
+	
+	public boolean isRaccolto() {
+		return raccolto;
+	}
+
+	public void setRaccolto(boolean raccolto) {
+		this.raccolto = raccolto;
+	}
+
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", nome=" + nome + ", key=" + key + "]";
