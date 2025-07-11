@@ -14,6 +14,7 @@ import theRiseOfITS.concreto.items.Bomb;
 import theRiseOfITS.concreto.items.Coin;
 import theRiseOfITS.concreto.items.Potion;
 import theRiseOfITS.concreto.items.Weapon;
+import theRiseOfITS.concreto.rooms.BossRoom;
 import theRiseOfITS.concreto.rooms.Direction;
 import theRiseOfITS.concreto.rooms.Floor;
 import theRiseOfITS.mechanics.CombatSystem;
@@ -523,12 +524,29 @@ public class Player extends Entity {
 
 		System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
 
-		// Avvia combattimento se ci sono mob
-		if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
-			List<Entity> nemici = new ArrayList<>(nextRoom.getMobs());
+		// Avvia combattimento se ci sono mob o boss
+		checkAndStartCombatWithMobs(nextRoom);
+		checkAndStartCombatWithBoss(nextRoom);
+		
+	}
+	
+	private void checkAndStartCombatWithMobs(Room room) {
+		if (room.getMobs() != null && !room.getMobs().isEmpty() ) {
+			List<Entity> nemici = new ArrayList<>(room.getMobs());
 			CombatSystem combat = new CombatSystem(this, nemici);
 			combat.startCombat();
 		}
+	}
+	
+	private void checkAndStartCombatWithBoss(Room room) {
+	    if (room instanceof BossRoom bossRoom) {
+	        if (bossRoom.getBoss() != null) {
+	            List<Entity> nemici = new ArrayList<>();
+	            nemici.add(bossRoom.getBoss());
+	            CombatSystem combat = new CombatSystem(this, nemici);
+	            combat.startCombat();
+	        }
+	    }
 	}
 
 	public void examineRoom(Room room) {
