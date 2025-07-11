@@ -33,7 +33,7 @@ public class CombatSystem {
 
         // 3. Fine del combattimento
         fineCombattimento();
-        scanner.close();
+        //scanner.close();
     }
 
     private void turnoGiocatore() {

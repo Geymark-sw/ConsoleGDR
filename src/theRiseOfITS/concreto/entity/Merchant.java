@@ -49,7 +49,7 @@ public class Merchant extends Entity implements Speakable {
 
 	        if (giocatore.getValue() >= prezzo) {
 	            giocatore.buyItem(item);
-	            giocatore.raccogliItem(item);
+	            giocatore.pickupItem(item);
 	            inventario.remove(index);  // rimuovo l'item venduto
 	            System.out.println(giocatore.getName() + " ha acquistato " + item.getNome() + " per " + prezzo + " monete.");
 	            return true;

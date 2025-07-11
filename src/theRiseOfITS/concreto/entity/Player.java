@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import theRiseOfITS.astratto.Chest;
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
 import theRiseOfITS.astratto.Room;
@@ -148,7 +149,7 @@ public class Player extends Entity {
 
 
 	//function that allows the player to collect an item and place it in his inventory
-	public boolean raccogliItem(Item item) {
+	public boolean pickupItem(Item item) {
 		if(item instanceof Coin) {
 			((Coin) item).consume();
 			this.value += ((Coin) item).getValue();
@@ -165,6 +166,28 @@ public class Player extends Entity {
 		}
 		return false;
 	}
+	
+	public boolean openChest(Chest chest) {
+		if (chest == null) {
+			return false;
+		}
+		
+		if (chest.getOggettiContenuti().isEmpty()) {
+			System.out.println("Apri la chest, ma è vuota!");
+			return true;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		if (chest.getOggettiContenuti() != null && !chest.getOggettiContenuti().isEmpty()) {
+	        sb.append("Oggetti trovati:\n");
+	        for (Item item : chest.getOggettiContenuti()) {
+	            sb.append("- ").append(item.getNome()).append("\n");
+	        }
+	        System.out.println(sb.toString());
+		}
+		return false;
+	}
+		
 	
 	public String showInventory() {
 	    StringBuilder sb = new StringBuilder();
@@ -484,19 +507,22 @@ public class Player extends Entity {
 	public String examineRoom(Room room) {
 		StringBuilder sb = new StringBuilder();
 	    sb.append("Stanza: ").append(room.getName()).append("\n");
-
+	    //controllo se ci sono mob
 	    if (room.getMobs() != null && !room.getMobs().isEmpty()) {
 	        sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
 	    } else {
 	        sb.append("Non ci sono nemici qui.\n");
 	    }
-
+	    //controllo se ci sono item a terra
 	    if (room.getItems() != null && !room.getItems().isEmpty()) {
 	        sb.append("Oggetti trovati:\n");
 	        for (Item item : room.getItems()) {
 	            sb.append("- ").append(item.getNome()).append("\n");
-	        }
-	    } else {
+	        }//chiusura for
+	        
+	        
+	    }//chiusura if
+	    else {
 	        sb.append("Non ci sono oggetti nella stanza.\n");
 	    }
 
