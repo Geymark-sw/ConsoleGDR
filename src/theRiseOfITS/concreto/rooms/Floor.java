@@ -154,7 +154,6 @@ public class Floor {
 	        return;
 	    }
 
-	    // Trova i limiti della griglia
 	    int minX = Integer.MAX_VALUE;
 	    int maxX = Integer.MIN_VALUE;
 	    int minY = Integer.MAX_VALUE;
@@ -167,64 +166,62 @@ public class Floor {
 	        if (p.y > maxY) maxY = p.y;
 	    }
 
-	    // Stampiamo la mappa per righe (y dall'alto verso il basso)
+	    // Ogni stanza sarà un blocco 3 righe alte x 3 colonne larghe
+	    // Per ogni riga y, stampiamo 3 righe di output
+
 	    for (int y = maxY; y >= minY; y--) {
-	        // 1) Stampa il nome/simbolo della stanza o '.' se vuota
+	        // Righe di output per il blocco stanza: top, middle, bottom
+	        StringBuilder line1 = new StringBuilder(); // riga sopra simbolo stanza (per porte N)
+	        StringBuilder line2 = new StringBuilder(); // riga con simbolo stanza e porte E/O
+	        StringBuilder line3 = new StringBuilder(); // riga sotto simbolo stanza (per porte S)
+
 	        for (int x = minX; x <= maxX; x++) {
 	            Point p = new Point(x, y);
 	            Room room = rooms.get(p);
+
 	            if (room != null) {
+	                // Simbolo stanza centrale
 	                char c;
 	                if (room instanceof InitialRoom) c = 'I';
 	                else if (room instanceof BossRoom) c = 'B';
 	                else if (room instanceof TreasureRoom) c = 'T';
 	                else if (room instanceof MerchantRoom) c = 'M';
-	                else c = 'R'; // RandomRoom o stanza generica
+	                else c = 'R';
 
-	                System.out.print(" " + c + " ");
-	            } else {
-	                System.out.print(" . ");
-	            }
-	        }
-	        System.out.println();
-
-	        // 2) Stampiamo le connessioni verticali (porte sopra e sotto)
-	        for (int x = minX; x <= maxX; x++) {
-	            Point p = new Point(x, y);
-	            Room room = rooms.get(p);
-	            if (room != null) {
-	                Room upRoom = room.getConnectedRoom(Direction.NORD);
-	                if (upRoom != null) {
-	                    System.out.print(" | ");
+	                // Riga sopra: spazio, porta nord se presente, spazio
+	                if (room.getConnectedRoom(Direction.NORD) != null) {
+	                    line1.append(" ^ ");
 	                } else {
-	                    System.out.print("   ");
+	                    line1.append("   ");
 	                }
-	            } else {
-	                System.out.print("   ");
-	            }
-	        }
-	        System.out.println();
 
-	        // 3) Stampiamo le connessioni orizzontali sotto ogni stanza (porta a est e ovest)
-	        // Per questo disegniamo solo se y != minY, ma per semplicità lo stampiamo per ogni riga qui sotto
+	                // Riga centrale: porta ovest se presente, simbolo stanza, porta est se presente
+	                line2.append(room.getConnectedRoom(Direction.OVEST) != null ? "<" : " ");
+	                line2.append(c);
+	                line2.append(room.getConnectedRoom(Direction.EST) != null ? ">" : " ");
 
-	        for (int x = minX; x <= maxX; x++) {
-	            Point p = new Point(x, y);
-	            Room room = rooms.get(p);
-	            if (room != null) {
-	                Room rightRoom = room.getConnectedRoom(Direction.EST);
-	                if (rightRoom != null) {
-	                    System.out.print(" - ");
+	                // Riga sotto: spazio, porta sud se presente, spazio
+	                if (room.getConnectedRoom(Direction.SUD) != null) {
+	                    line3.append(" v ");
 	                } else {
-	                    System.out.print("   ");
+	                    line3.append("   ");
 	                }
+
 	            } else {
-	                System.out.print("   ");
+	                // Non c'è stanza: stampo blocco vuoto 3 spazi per ciascuna riga
+	                line1.append("   ");
+	                line2.append("   ");
+	                line3.append("   ");
 	            }
 	        }
-	        System.out.println();
+
+	        // Stampa le 3 righe del blocco
+	        System.out.println(line1.toString());
+	        System.out.println(line2.toString());
+	        System.out.println(line3.toString());
 	    }
 	}
+
 
 
 }
