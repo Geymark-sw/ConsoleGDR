@@ -7,6 +7,7 @@ import theRiseOfITS.astratto.Chest;
 import theRiseOfITS.astratto.Item;
 import theRiseOfITS.astratto.Room;
 import theRiseOfITS.concreto.chests.StandardChest;
+import theRiseOfITS.concreto.entity.Mob;
 import theRiseOfITS.utilities.FactoryItem;
 import theRiseOfITS.utilities.FactoryMob;
 
@@ -41,6 +42,11 @@ public class RandomRoom extends Room {
 
 	public void setChest(Chest chest) {
 		this.chest = chest;
+	}
+	
+	public void rimuoviMobSconfitti() {
+	    List<Mob> mobs = this.getMobs(); 
+	    mobs.removeIf(Mob::isDead);
 	}
 
 	@Override

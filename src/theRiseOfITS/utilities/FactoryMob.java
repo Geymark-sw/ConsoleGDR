@@ -144,7 +144,7 @@ public class FactoryMob {
 
 	private static Mob createStudenteArmellini() {
 		int hp = 30 + random.nextInt(6);
-		int atk = 3 + random.nextInt(3);
+		int atk = 5 + random.nextInt(3);
 		int def = 0 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba piccola", false, 10), new Potion("Pozione piccola", false, 10),
 				new Coin("Crediti formativi", false));
@@ -153,7 +153,7 @@ public class FactoryMob {
 
 	private static Mob createCyberStudent() {
 		int hp = 30 + random.nextInt(10);
-		int atk = 3 + random.nextInt(3);
+		int atk = 5 + random.nextInt(3);
 		int def = 0 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba piccola", false, 10), new Potion("Pozione piccola", false, 10),
 				new Coin("Crediti formativi", false));

@@ -121,6 +121,14 @@ public abstract class Room {
 	public Room getConnectedRoom(Direction direction) {
 	    return doors.get(direction); // null se non esiste
 	}
+	
+	public void rimuoviMobSconfitti() {
+	    mobs.removeIf(Mob::isDead);
+	}
+
+//	public void rimuoviItemRaccolti() {
+//	    items.removeIf(Item::isCollected); // supponendo che Item abbia isCollected()
+//	}
 
 
 	@Override

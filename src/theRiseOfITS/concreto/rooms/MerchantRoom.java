@@ -1,7 +1,10 @@
 package theRiseOfITS.concreto.rooms;
 
+import java.util.List;
+
 import theRiseOfITS.astratto.Room;
 import theRiseOfITS.concreto.entity.Merchant;
+import theRiseOfITS.concreto.entity.Mob;
 import theRiseOfITS.utilities.FactoryMerchant;
 
 public class MerchantRoom extends Room{
@@ -18,6 +21,11 @@ public class MerchantRoom extends Room{
 
 	public void setMerchant(Merchant merchant) {
 		this.merchant = merchant;
+	}
+	
+	public void rimuoviMobSconfitti() {
+	    List<Mob> mobs = this.getMobs(); 
+	    mobs.removeIf(mob -> mob.isDead());
 	}
 
 	@Override
