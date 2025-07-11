@@ -28,6 +28,18 @@ public class BossRoom extends Room {
 		return boss;
 	}
 
+	public String getNomelivello() {
+		return nomelivello;
+	}
+
+	public void setNomelivello(String nomelivello) {
+		this.nomelivello = nomelivello;
+	}
+
+	public void setBoss(Boss boss) {
+		this.boss = boss;
+	}
+
 	public String getLivello() {
 		return nomelivello;
 	}

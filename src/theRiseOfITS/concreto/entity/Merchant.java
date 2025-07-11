@@ -17,6 +17,15 @@ public class Merchant extends Entity implements Speakable {
 		this.inventario = inventario;
 		this.dialogue = dialogue;
 	}
+	
+	public Merchant() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public void setDialogue(String dialogue) {
+		this.dialogue = dialogue;
+	}
 
 	public List<Item> getInventario() {
 		return inventario;

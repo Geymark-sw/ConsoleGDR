@@ -12,6 +12,11 @@ public class StandardChest extends Chest{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public StandardChest() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 
     @Override
     public String toString() {

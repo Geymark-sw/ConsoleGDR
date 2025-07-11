@@ -16,6 +16,10 @@ public class Coin extends Item implements Consumable{
 	}
 	
 	
+	public Coin() {
+		// TODO Auto-generated constructor stub
+	}
+	
 
 	public void setValue(int value) {
 		this.value = value;

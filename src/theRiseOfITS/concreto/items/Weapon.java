@@ -14,6 +14,10 @@ public class Weapon extends Item implements Equippable{
 		this.equipped = false;
 		
 	}
+	
+	public Weapon() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getDamage() {
 		return damage;

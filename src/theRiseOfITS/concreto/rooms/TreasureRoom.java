@@ -44,6 +44,13 @@ public class TreasureRoom extends Room {
 	public Chest getChest() {
         return chest;
     }
+	
+	
+
+	public void setChest(Chest chest) {
+		this.chest = chest;
+	}
+
 
 	@Override
 	public String toString() {

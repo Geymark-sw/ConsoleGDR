@@ -27,5 +27,11 @@ public class FactoryMerchant {
 		
 		
 	}
+	
+	public FactoryMerchant() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 
 }

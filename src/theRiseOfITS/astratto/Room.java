@@ -129,10 +129,30 @@ public abstract class Room {
 	    mobs.removeIf(Mob::isDead);
 	}
 
-//	public void rimuoviItemRaccolti() {
-//	    items.removeIf(Item::isCollected); // supponendo che Item abbia isCollected()
-//	}
+	public void rimuoviItemRaccolti() {
+	    items.removeIf(Item::isRaccolto); // supponendo che Item abbia isCollected()
+	}
 
+
+	public Map<Direction, Room> getDoors() {
+		return doors;
+	}
+
+	public void setDoors(Map<Direction, Room> doors) {
+		this.doors = doors;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 
 	@Override
 	public String toString() {

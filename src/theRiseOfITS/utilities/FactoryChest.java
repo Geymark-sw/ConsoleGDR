@@ -11,6 +11,16 @@ import theRiseOfITS.concreto.chests.StandardChest;
 public class FactoryChest {
 	private static final Random rand = new Random();
 
+	public FactoryChest() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public static Random getRand() {
+		return rand;
+	}
+
+
 	// generiamo una chest casuale con item casuali
 	public static StandardChest generaChestCasuale(String nome) {
 		List<Item> oggetti = FactoryItem.generaDropCasuale(3);

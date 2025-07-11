@@ -12,6 +12,10 @@ public class Potion extends Item implements Consumable {
 		super(name, key);
 		this.hp = hp;
 	}
+	
+	public Potion() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void consume() {

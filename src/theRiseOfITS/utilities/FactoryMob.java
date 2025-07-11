@@ -30,6 +30,22 @@ public class FactoryMob {
 		return generateMobList;
 	}
 
+	
+	public FactoryMob() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public static Random getRandom() {
+		return random;
+	}
+
+
+	public static void setRandom(Random random) {
+		FactoryMob.random = random;
+	}
+
+
 	// generiamo un numero randomico, in base al numero entriamo nel case che ci
 	// darà il rispettivo mob
 	public static Mob generateRandomMob() {

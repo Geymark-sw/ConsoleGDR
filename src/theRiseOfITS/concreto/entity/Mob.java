@@ -15,9 +15,24 @@ public class Mob extends Entity{
 		super(name, hp, atk, def);
 		this.dropsList = dropsList;
 	}
+	public Mob() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	Random random = new Random();
 	
+	public List<Item> getDropsList() {
+		return dropsList;
+	}
+	public void setDropsList(List<Item> dropsList) {
+		this.dropsList = dropsList;
+	}
+	public Random getRandom() {
+		return random;
+	}
+	public void setRandom(Random random) {
+		this.random = random;
+	}
 	@Override
 	public boolean isDead() {
 		// TODO Auto-generated method stub

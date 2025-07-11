@@ -15,6 +15,22 @@ public class Boss extends Mob implements Speakable {
 		super(name, hp, atk, def, dropsList);
 		this.dialogue = dialogue;
 	}
+	
+	public Boss() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public List<Item> getDropsList() {
+		return dropsList;
+	}
+
+	public void setDropsList(List<Item> dropsList) {
+		this.dropsList = dropsList;
+	}
+
+	public void setDialogue(String dialogue) {
+		this.dialogue = dialogue;
+	}
 
 	private String dialogue;
 

@@ -24,6 +24,22 @@ public class Floor {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Map<Point, Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(Map<Point, Room> rooms) {
+		this.rooms = rooms;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setInitialRoom(Room initialRoom) {
+		this.initialRoom = initialRoom;
+	}
+
 	/**
 	 * 
 	 * @param a   Room of where you are

@@ -20,6 +20,14 @@ public abstract class Entity {
 		this.def = def;
 	}
 	
+	public static int getStaticId() {
+		return staticId;
+	}
+
+	public static void setStaticId(int staticId) {
+		Entity.staticId = staticId;
+	}
+
 	public boolean isDead() {
 		return hp <=0;
 	}

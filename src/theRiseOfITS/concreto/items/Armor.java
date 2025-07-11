@@ -13,6 +13,10 @@ public class Armor extends Item implements Equippable{
 		this.defense = defense;
 		this.equipped = false;
 	}
+	
+	public Armor() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getDefense() {
 		return defense;

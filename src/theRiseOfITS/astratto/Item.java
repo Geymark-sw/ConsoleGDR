@@ -51,6 +51,14 @@ public abstract class Item {
 		return id;
 	}
 
+	public static int getIdStatico() {
+		return idStatico;
+	}
+
+	public static void setIdStatico(int idStatico) {
+		Item.idStatico = idStatico;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

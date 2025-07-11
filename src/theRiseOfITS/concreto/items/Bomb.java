@@ -13,6 +13,10 @@ public class Bomb extends Item implements Consumable{
 		this.damage = damage;
 	}
 	
+	public Bomb() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public void consume() {
 		this.used = true;

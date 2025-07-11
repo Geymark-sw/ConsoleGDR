@@ -14,6 +14,9 @@ import theRiseOfITS.concreto.items.Weapon;
 public class FactoryItem {
 	private static final Random rand = new Random();
 
+	public FactoryItem() {
+		// TODO Auto-generated constructor stub
+	}
 	// genera item casuale tra i 3
 	public static Item generaItemCasuale() {
 		int tipo = rand.nextInt(5);
@@ -92,4 +95,10 @@ public class FactoryItem {
 
 		return drop;
 	}
+
+	public static Random getRand() {
+		return rand;
+	}
+	
+	
 }
