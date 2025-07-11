@@ -17,7 +17,7 @@ public class FactoryItem {
 	public FactoryItem() {
 		// TODO Auto-generated constructor stub
 	}
-	// genera item casuale tra i 3
+	// genera item casuale tra i 4
 	public static Item generaItemCasuale() {
 		int tipo = rand.nextInt(5);
 

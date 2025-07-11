@@ -1,12 +1,5 @@
 package theRiseOfITS.astratto;
 
-
-import theRiseOfITS.concreto.items.Armor;
-import theRiseOfITS.concreto.items.Bomb;
-import theRiseOfITS.concreto.items.Coin;
-import theRiseOfITS.concreto.items.Potion;
-import theRiseOfITS.concreto.items.Weapon;
-
 //import com.fasterxml.jackson.annotation.JsonSubTypes;
 //
 //Questa parte serve a dire che leggendo il file json, quando il type dell'oggetto json 
