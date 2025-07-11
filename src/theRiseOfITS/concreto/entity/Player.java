@@ -580,6 +580,233 @@ public class Player extends Entity {
 
 		return sb.toString();
 	}
+	
+	public void openInventoryMenu() {
+	    Scanner scanner = new Scanner(System.in);
+	    boolean continueMenu = true;
+	    
+	    while (continueMenu) {
+	        System.out.println("\n=== INVENTARIO ===");
+	        showInventory();
+	        System.out.println("\nCosa vuoi fare?");
+	        System.out.println("1. Equipaggia arma");
+	        System.out.println("2. Equipaggia armatura");
+	        System.out.println("3. Usa pozione");
+	        System.out.println("4. Usa bomba");
+	        System.out.println("5. Scarta oggetto");
+	        System.out.println("6. Mostra equipaggiamento attuale");
+	        System.out.println("7. Disequipaggia arma");
+	        System.out.println("8. Disequipaggia armatura");
+	        System.out.println("9. Esci dall'inventario");
+	        
+	        System.out.print("Scelta: ");
+	        int choice = scanner.nextInt();
+	        scanner.nextLine(); // Consuma il newline
+	        
+	        switch (choice) {
+	            case 1:
+	                equipWeaponMenu();
+	                break;
+	            case 2:
+	                equipArmorMenu();
+	                break;
+	            case 3:
+	                usePotionMenu();
+	                break;
+	            case 4:
+	                useBombMenu();
+	                break;
+	            case 5:
+	                discardItemMenu();
+	                break;
+	            case 6:
+	                showCurrentEquipment();
+	                break;
+	            case 7:
+	                unequipCurrentWeapon();
+	                break;
+	            case 8:
+	                unequipCurrentArmor();
+	                break;
+	            case 9:
+	                continueMenu = false;
+	                break;
+	            default:
+	                System.out.println("Scelta non valida!");
+	        }
+	    }
+	}
+
+	private void equipWeaponMenu() {
+	    List<Weapon> weapons = getItemsByType(Weapon.class);
+	    
+	    if (weapons.isEmpty()) {
+	        System.out.println("Non hai armi nell'inventario!");
+	        return;
+	    }
+	    
+	    System.out.println("\n=== EQUIPAGGIA ARMA ===");
+	    for (int i = 0; i < weapons.size(); i++) {
+	        Weapon weapon = weapons.get(i);
+	        String status = weapon.isEquipped() ? " [EQUIPAGGIATA]" : "";
+	        System.out.println((i + 1) + ". " + weapon.getNome() + 
+	                          " (Danno: " + weapon.getDamage() + ")" + status);
+	    }
+	    
+	    System.out.print("Quale arma vuoi equipaggiare? (0 per annullare): ");
+	    Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+	    
+	    if (choice > 0 && choice <= weapons.size()) {
+	        Weapon selectedWeapon = weapons.get(choice - 1);
+	        equipWeapon(selectedWeapon);
+	    } else if (choice != 0) {
+	        System.out.println("Scelta non valida!");
+	    }
+	}
+
+	private void equipArmorMenu() {
+	    List<Armor> armors = getItemsByType(Armor.class);
+	    
+	    if (armors.isEmpty()) {
+	        System.out.println("Non hai armature nell'inventario!");
+	        return;
+	    }
+	    
+	    System.out.println("\n=== EQUIPAGGIA ARMATURA ===");
+	    for (int i = 0; i < armors.size(); i++) {
+	        Armor armor = armors.get(i);
+	        String status = armor.isEquipped() ? " [EQUIPAGGIATA]" : "";
+	        System.out.println((i + 1) + ". " + armor.getNome() + 
+	                          " (Difesa: " + armor.getDefense() + ")" + status);
+	    }
+	    
+	    System.out.print("Quale armatura vuoi equipaggiare? (0 per annullare): ");
+	    Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+	    
+	    if (choice > 0 && choice <= armors.size()) {
+	        Armor selectedArmor = armors.get(choice - 1);
+	        equipArmor(selectedArmor);
+	    } else if (choice != 0) {
+	        System.out.println("Scelta non valida!");
+	    }
+	}
+
+	private void usePotionMenu() {
+	    List<Potion> potions = getItemsByType(Potion.class);
+	    
+	    if (potions.isEmpty()) {
+	        System.out.println("Non hai pozioni nell'inventario!");
+	        return;
+	    }
+	    
+	    System.out.println("\n=== USA POZIONE ===");
+	    System.out.println("Salute attuale: " + this.getHp() + "/100");
+	    
+	    for (int i = 0; i < potions.size(); i++) {
+	        Potion potion = potions.get(i);
+	        System.out.println((i + 1) + ". " + potion.getNome() + 
+	                          " (Cura: " + potion.getHp() + " HP)");
+	    }
+	    
+	    System.out.print("Quale pozione vuoi usare? (0 per annullare): ");
+	    Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+	    
+	    if (choice > 0 && choice <= potions.size()) {
+	        Potion selectedPotion = potions.get(choice - 1);
+	        usePotion(selectedPotion);
+	    } else if (choice != 0) {
+	        System.out.println("Scelta non valida!");
+	    }
+	}
+
+	private void useBombMenu() {
+	    List<Bomb> bombs = getItemsByType(Bomb.class);
+	    
+	    if (bombs.isEmpty()) {
+	        System.out.println("Non hai bombe nell'inventario!");
+	        return;
+	    }
+	    
+	    System.out.println("\n=== USA BOMBA ===");
+	    for (int i = 0; i < bombs.size(); i++) {
+	        Bomb bomb = bombs.get(i);
+	        System.out.println((i + 1) + ". " + bomb.getNome());
+	    }
+	    
+	    System.out.print("Quale bomba vuoi usare? (0 per annullare): ");
+	    Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+	    
+	    if (choice > 0 && choice <= bombs.size()) {
+	        Bomb selectedBomb = bombs.get(choice - 1);
+	        useBomb(selectedBomb);
+	    } else if (choice != 0) {
+	        System.out.println("Scelta non valida!");
+	    }
+	}
+
+	private void discardItemMenu() {
+	    System.out.println("\n=== SCARTA OGGETTO ===");
+	    showInventory();
+	    
+	    System.out.print("Quale slot vuoi scartare? (0 per annullare): ");
+	    Scanner scanner = new Scanner(System.in);
+	    int slot = scanner.nextInt();
+	    
+	    if (slot > 0 && slot <= inventory.length) {
+	        Item item = inventory[slot - 1];
+	        if (item != null) {
+	            discardItemFromInventory(item);
+	        } else {
+	            System.out.println("Slot vuoto!");
+	        }
+	    } else if (slot != 0) {
+	        System.out.println("Slot non valido!");
+	    }
+	}
+
+	private void showCurrentEquipment() {
+	    System.out.println("\n=== EQUIPAGGIAMENTO ATTUALE ===");
+	    
+	    if (equippedWeapon != null) {
+	        System.out.println("Arma: " + equippedWeapon.getNome() + 
+	                          " (Danno: " + equippedWeapon.getDamage() + ")");
+	    } else {
+	        System.out.println("Arma: Nessuna arma equipaggiata");
+	    }
+	    
+	    if (equippedArmor != null) {
+	        System.out.println("Armatura: " + equippedArmor.getNome() + 
+	                          " (Difesa: " + equippedArmor.getDefense() + ")");
+	    } else {
+	        System.out.println("Armatura: Nessuna armatura equipaggiata");
+	    }
+	    
+	    System.out.println("Statistiche totali:");
+	    System.out.println("HP: " + this.getHp());
+	    System.out.println("ATK: " + this.getAtk());
+	    System.out.println("DEF: " + this.getDef());
+	    System.out.println("Monete: " + this.getValue());
+	}
+
+	private void unequipCurrentWeapon() {
+	    if (equippedWeapon != null) {
+	        unequipWeapon(equippedWeapon);
+	    } else {
+	        System.out.println("Non hai nessuna arma equipaggiata!");
+	    }
+	}
+
+	private void unequipCurrentArmor() {
+	    if (equippedArmor != null) {
+	        unequipArmor(equippedArmor);
+	    } else {
+	        System.out.println("Non hai nessuna armatura equipaggiata!");
+	    }
+	}
 
 
 }
