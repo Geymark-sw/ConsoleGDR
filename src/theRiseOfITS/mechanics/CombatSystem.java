@@ -86,6 +86,10 @@ public class CombatSystem {
         System.out.println("\n--- FINE COMBATTIMENTO ---");
         if (!player.isDead()) {
             System.out.println("VITTORIA! Hai sconfitto tutti i nemici.");
+         // 🔥 Rimuove i mob sconfitti dalla stanza attuale
+            if (player.getCurrentRoom() != null) {
+                player.getCurrentRoom().rimuoviMobSconfitti();
+            }
         } else {
             System.out.println("SCONFITTA! Sei stato battuto.");
         }
