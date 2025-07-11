@@ -126,12 +126,12 @@ public class Floor {
 				Point newPoint = new Point(nx, ny);
 				
 				if (!rooms.containsKey(newPoint)) {
-					Room newRoom = specialRooms.get(rand.nextInt(specialRooms.size()));
+					int index = rand.nextInt(specialRooms.size());
+					Room newRoom = specialRooms.get(index);
 					newRoom.setPosition(nx, ny);
 					join(base, direction, newRoom);
 					rooms.put(newPoint, newRoom);
-					//specialRooms.remove(newRoom);
-					specialRooms.removeIf(r -> r.getName().equals(newRoom.getName()));
+					specialRooms.remove(index); // rimuove l'esatta istanza
 					joined = true;
 					count++;
 					break;
@@ -141,18 +141,90 @@ public class Floor {
 				list.remove(base);
 			}
 		}
-		
-		
-		
-		
-		
-		
-
 	}
 
 	@Override
 	public String toString() {
 		return "Floor [name=" + name + "]";
 	}
+	
+	public void printMap() {
+	    if (rooms.isEmpty()) {
+	        System.out.println("La mappa è vuota.");
+	        return;
+	    }
+
+	    // Trova i limiti della griglia
+	    int minX = Integer.MAX_VALUE;
+	    int maxX = Integer.MIN_VALUE;
+	    int minY = Integer.MAX_VALUE;
+	    int maxY = Integer.MIN_VALUE;
+
+	    for (Point p : rooms.keySet()) {
+	        if (p.x < minX) minX = p.x;
+	        if (p.x > maxX) maxX = p.x;
+	        if (p.y < minY) minY = p.y;
+	        if (p.y > maxY) maxY = p.y;
+	    }
+
+	    // Stampiamo la mappa per righe (y dall'alto verso il basso)
+	    for (int y = maxY; y >= minY; y--) {
+	        // 1) Stampa il nome/simbolo della stanza o '.' se vuota
+	        for (int x = minX; x <= maxX; x++) {
+	            Point p = new Point(x, y);
+	            Room room = rooms.get(p);
+	            if (room != null) {
+	                char c;
+	                if (room instanceof InitialRoom) c = 'I';
+	                else if (room instanceof BossRoom) c = 'B';
+	                else if (room instanceof TreasureRoom) c = 'T';
+	                else if (room instanceof MerchantRoom) c = 'M';
+	                else c = 'R'; // RandomRoom o stanza generica
+
+	                System.out.print(" " + c + " ");
+	            } else {
+	                System.out.print(" . ");
+	            }
+	        }
+	        System.out.println();
+
+	        // 2) Stampiamo le connessioni verticali (porte sopra e sotto)
+	        for (int x = minX; x <= maxX; x++) {
+	            Point p = new Point(x, y);
+	            Room room = rooms.get(p);
+	            if (room != null) {
+	                Room upRoom = room.getConnectedRoom(Direction.NORD);
+	                if (upRoom != null) {
+	                    System.out.print(" | ");
+	                } else {
+	                    System.out.print("   ");
+	                }
+	            } else {
+	                System.out.print("   ");
+	            }
+	        }
+	        System.out.println();
+
+	        // 3) Stampiamo le connessioni orizzontali sotto ogni stanza (porta a est e ovest)
+	        // Per questo disegniamo solo se y != minY, ma per semplicità lo stampiamo per ogni riga qui sotto
+
+	        for (int x = minX; x <= maxX; x++) {
+	            Point p = new Point(x, y);
+	            Room room = rooms.get(p);
+	            if (room != null) {
+	                Room rightRoom = room.getConnectedRoom(Direction.EST);
+	                if (rightRoom != null) {
+	                    System.out.print(" - ");
+	                } else {
+	                    System.out.print("   ");
+	                }
+	            } else {
+	                System.out.print("   ");
+	            }
+	        }
+	        System.out.println();
+	    }
+	}
+
 
 }
