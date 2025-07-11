@@ -72,7 +72,7 @@ public class Main {
 
 				System.out.println("\n============ MENU ==========");
 				System.out.println("1. Esamina stanza");
-				System.out.println("2. Mostra inventario");
+				System.out.println("2. Inventario");
 				System.out.println("3. Cambia stanza");
 				System.out.println("4. Esci dal gioco");
 				
@@ -88,13 +88,19 @@ public class Main {
 			} while (choice < 1 || choice > 4); //Ciclo do while per forzare ad inserire un valore valido
 			
 			switch(choice) {
-				case 1 : player.examineRoom(player.getCurrentRoom());
+				case 1 : 
+					player.examineRoom(player.getCurrentRoom());
 					break;
-				case 2 : player.showInventory();
+				case 2 : 
+					player.openInventoryMenu();;
+					
+				
 					break;
-				case 3 : player.chooseAndChangeRoom();
+				case 3 : 
+					player.chooseAndChangeRoom();
 					break;
-				case 4 : exitGame();
+				case 4 : 
+					exitGame();
 					runningGame = false;
 					break;
 					
@@ -106,7 +112,6 @@ public class Main {
 		}
 		
 	}
-	
 
 	public static int firstMenu() {
 		int option = 0;
