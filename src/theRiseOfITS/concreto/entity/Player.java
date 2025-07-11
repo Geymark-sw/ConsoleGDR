@@ -19,7 +19,7 @@ import theRiseOfITS.concreto.rooms.Floor;
 import theRiseOfITS.mechanics.CombatSystem;
 
 public class Player extends Entity {
-	
+
 	private int value;
 	private Item[] inventory;
 	private int equippedWeaponDamage = 0;
@@ -31,7 +31,7 @@ public class Player extends Entity {
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
-		super(name, 100, 10, 5);  // esempio: 100 HP, 10 ATK, 5 DEF
+		super(name, 100, 10, 5); // esempio: 100 HP, 10 ATK, 5 DEF
 		this.inventory = new Item[10];
 		this.value = 0;
 
@@ -40,7 +40,15 @@ public class Player extends Entity {
 		this.setAtk(this.getAtk() + equippedWeaponDamage);
 	}
 
-	
+	public Player() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Player(String name, int hp, int atk, int def) {
+		super(name, hp, atk, def);
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getValue() {
 		return value;
 	}
@@ -56,7 +64,7 @@ public class Player extends Entity {
 	public void setInventory(Item[] inventory) {
 		this.inventory = inventory;
 	}
-	
+
 	public int getEquippedWeaponDamage() {
 		return equippedWeaponDamage;
 	}
@@ -73,330 +81,318 @@ public class Player extends Entity {
 		this.equippedArmorDefense = equippedArmorDefense;
 	}
 
-	
 	public Weapon getEquippedWeapon() {
 		return equippedWeapon;
 	}
-
 
 	public void setEquippedWeapon(Weapon equippedWeapon) {
 		this.equippedWeapon = equippedWeapon;
 	}
 
-
 	public Armor getEquippedArmor() {
 		return equippedArmor;
 	}
 
-
 	public void setEquippedArmor(Armor equippedArmor) {
 		this.equippedArmor = equippedArmor;
 	}
-	
+
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
 
-
 	public void setCurrentRoom(Room currentRoom) {
 		this.currentRoom = currentRoom;
 	}
-	
-	
-
 
 	public Floor getCurrentFloor() {
 		return currentFloor;
 	}
 
-
 	public void setCurrentFloor(Floor currentFloor) {
 		this.currentFloor = currentFloor;
 	}
+	
 
-
-	//function that checks if the player is dead or not (HP = 0)
+	// function that checks if the player is dead or not (HP = 0)
 	public boolean isDead() {
 		return this.getHp() <= 0;
 	}
 
-	//function that removes from the inventory the consumed or null items
+	// function that removes from the inventory the consumed or null items
 	public void removeConsumedOrNullItemsFromInventory() {
-	    // Lista temporanea per raccogliere solo gli oggetti validi
-	    List<Item> oggettiValidi = new ArrayList<>();
+		// Lista temporanea per raccogliere solo gli oggetti validi
+		List<Item> oggettiValidi = new ArrayList<>();
 
-	    for (Item item : this.inventory) {
-	        if (item instanceof Potion) {
-	            if (!((Potion) item).isUsed()) {
-	                oggettiValidi.add(item);
-	            }
-	        } else if (item instanceof Bomb) {
-	            if (!((Bomb) item).isUsed()) {
-	                oggettiValidi.add(item);
-	            }
-	        } else if (item != null) {
-	            oggettiValidi.add(item);
-	        }
-	    }
-	    // Ricrea un array con la stessa dimensione di quello vecchio
-	    Item[] nuovoInventario = new Item[this.inventory.length];
-	    for (int i = 0; i < oggettiValidi.size() && i < nuovoInventario.length; i++) {
-	        nuovoInventario[i] = oggettiValidi.get(i);
-	    }
+		for (Item item : this.inventory) {
+			if (item instanceof Potion) {
+				if (!((Potion) item).isUsed()) {
+					oggettiValidi.add(item);
+				}
+			} else if (item instanceof Bomb) {
+				if (!((Bomb) item).isUsed()) {
+					oggettiValidi.add(item);
+				}
+			} else if (item != null) {
+				oggettiValidi.add(item);
+			}
+		}
+		// Ricrea un array con la stessa dimensione di quello vecchio
+		Item[] nuovoInventario = new Item[this.inventory.length];
+		for (int i = 0; i < oggettiValidi.size() && i < nuovoInventario.length; i++) {
+			nuovoInventario[i] = oggettiValidi.get(i);
+		}
 
-	    this.inventory = nuovoInventario;
+		this.inventory = nuovoInventario;
 	}
 
-
-	//function that allows the player to collect an item and place it in his inventory
+	// function that allows the player to collect an item and place it in his
+	// inventory
 	public boolean pickupItem(Item item) {
-		if(item instanceof Coin) {
+		if (item instanceof Coin) {
 			((Coin) item).consume();
 			this.value += ((Coin) item).getValue();
-			System.out.println("Hai raccolto "+ ((Coin) item).getValue() + " monete!");
+			System.out.println("Hai raccolto " + ((Coin) item).getValue() + " monete!");
 		} else {
-			for(int i=0; i<this.inventory.length; i++) {
-				if(this.inventory[i] == null) {
+			for (int i = 0; i < this.inventory.length; i++) {
+				if (this.inventory[i] == null) {
 					this.inventory[i] = item;
 					item.setRaccolto(true);
-					System.out.println("Hai raccolto "+ item +"!");
+					System.out.println("Hai raccolto " + item + "!");
 					return true;
 				}
-					
+
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean openChest(Chest chest) {
-	    if (chest == null) {
-	        return false;
-	    }
+		if (chest == null) {
+			return false;
+		}
 
-	    if (chest.getOggettiContenuti().isEmpty()) {
-	        System.out.println("Apri la chest, ma è vuota!");
-	        return true;
-	    }
+		if (chest.getOggettiContenuti().isEmpty()) {
+			System.out.println("Apri la chest, ma è vuota!");
+			return true;
+		}
 
-	    Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 
-	    List<Item> oggetti = new ArrayList<>(chest.getOggettiContenuti());
-	    System.out.println("Hai aperto la chest. Contiene i seguenti oggetti:");
+		List<Item> oggetti = new ArrayList<>(chest.getOggettiContenuti());
+		System.out.println("Hai aperto la chest. Contiene i seguenti oggetti:");
 
-	    for (int i = 0; i < oggetti.size(); i++) {
-	        Item item = oggetti.get(i);
-	        System.out.println((i + 1) + ". " + item.getNome());
-	    }
+		for (int i = 0; i < oggetti.size(); i++) {
+			Item item = oggetti.get(i);
+			System.out.println((i + 1) + ". " + item.getNome());
+		}
 
-	    for (int i = 0; i < oggetti.size(); i++) {
-	        Item item = oggetti.get(i);
-	        String risposta = "";
+		for (int i = 0; i < oggetti.size(); i++) {
+			Item item = oggetti.get(i);
+			String risposta = "";
 
-	        do {
-	            System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
-	            risposta = scanner.nextLine().trim().toLowerCase();
+			do {
+				System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
+				risposta = scanner.nextLine().trim().toLowerCase();
 
-	            if (risposta.equals("s")) {
-	                boolean raccolto = pickupItem(item);
-	                if (raccolto) {
-	                    chest.getOggettiContenuti().remove(item); // rimuoviamo l'oggetto dalla chest solo se raccolto
-	                    i--; // aggiornamento per evitare salti nella lista dopo la rimozione
-	                } else {
-	                    System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
-	                }
-	            } else if (risposta.equals("n")) {
-	                System.out.println("Hai deciso di lasciare '" + item.getNome() + "' nella chest.");
-	            } else {
-	                System.out.println("Input non valido. Digita 's' per sì o 'n' per no.");
-	            }
+				if (risposta.equals("s")) {
+					boolean raccolto = pickupItem(item);
+					if (raccolto) {
+						chest.getOggettiContenuti().remove(item); // rimuoviamo l'oggetto dalla chest solo se raccolto
+						i--; // aggiornamento per evitare salti nella lista dopo la rimozione
+					} else {
+						System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
+					}
+				} else if (risposta.equals("n")) {
+					System.out.println("Hai deciso di lasciare '" + item.getNome() + "' nella chest.");
+				} else {
+					System.out.println("Input non valido. Digita 's' per sì o 'n' per no.");
+				}
 
-	        } while (!risposta.equals("s") && !risposta.equals("n"));
-	    }
+			} while (!risposta.equals("s") && !risposta.equals("n"));
+		}
 
-	    return true;
+		return true;
 	}
 
-		
-	
-	public String showInventory() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("Inventario:\n");
+	public void showInventory() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Inventario:\n");
 
-	    for (int i = 0; i < inventory.length; i++) {
-	        Item item = inventory[i];
-	        if (item != null) {
-	            sb.append("Slot ").append(i).append(": ").append(item.getNome()).append("\n");
-	        } else {
-	            sb.append("Slot ").append(i).append(": [vuoto]\n");
-	        }
-	    }
-
-	    return sb.toString();
+		for (int i = 0; i < inventory.length; i++) {
+			Item item = inventory[i];
+			if (item != null) {
+				sb.append("Slot ").append(i).append(": ").append(item.getNome()).append("\n");
+			} else {
+				sb.append("Slot ").append(i).append(": [vuoto]\n");
+			}
+		}
+		System.out.println(sb.toString());
 	}
-	
-	
+
 	public <T extends Item> List<T> getItemsByType(Class<T> tipo) {
-	    List<T> risultati = new ArrayList<>();
+		List<T> risultati = new ArrayList<>();
 
-	    for (Item item : inventory) {
-	        if (tipo.isInstance(item)) {
-	            risultati.add(tipo.cast(item));
-	        }
-	    }
+		for (Item item : inventory) {
+			if (tipo.isInstance(item)) {
+				risultati.add(tipo.cast(item));
+			}
+		}
 
-	    return risultati;
+		return risultati;
 	}
 
-
-	//function that allows the player to increase his health by using a given potion
+	// function that allows the player to increase his health by using a given
+	// potion
 	public boolean usePotion(Potion potion) {
-	    if (potion == null) {
-	    	System.out.println("Errore, pozione non trovata");
-	        return false;
-	    }
+		if (potion == null) {
+			System.out.println("Errore, pozione non trovata");
+			return false;
+		}
 
-	    Item[] inventory = this.getInventory();
-	    boolean trovato = false;
+		Item[] inventory = this.getInventory();
+		boolean trovato = false;
 
-	    for (Item item : inventory) {
-	        if (item == potion) {
-	            trovato = true;
-	            break;
-	        }
-	    }
+		for (Item item : inventory) {
+			if (item == potion) {
+				trovato = true;
+				break;
+			}
+		}
 
-	    if (!trovato) {
-	    	System.out.println("Pozione non trovata nell'inventario");
-	        return false;
-	    }
+		if (!trovato) {
+			System.out.println("Pozione non trovata nell'inventario");
+			return false;
+		}
 
-	    if (this.getHp() >= 100) {
-	    	System.out.println("Hai già la salute al massimo!");
-	        return false;
-	    }
+		if (this.getHp() >= 100) {
+			System.out.println("Hai già la salute al massimo!");
+			return false;
+		}
 
-	    // Applica l'effetto della pozione
-	    if (this.getHp() + potion.getHp() > 100) {
-	        this.setHp(100);
-	    } else {
-	        this.setHp(this.getHp() + potion.getHp());
-	    }
+		// Applica l'effetto della pozione
+		if (this.getHp() + potion.getHp() > 100) {
+			this.setHp(100);
+		} else {
+			this.setHp(this.getHp() + potion.getHp());
+		}
 
-	    potion.consume();
+		potion.consume();
 
-	    // Rimuove la pozione usata dall'inventario (la mette a null)
-	    for (int i = 0; i < inventory.length; i++) {
-	        if (inventory[i] == potion) {
-	            inventory[i] = null;
-	            break;
-	        }
-	    }
+		// Rimuove la pozione usata dall'inventario (la mette a null)
+		for (int i = 0; i < inventory.length; i++) {
+			if (inventory[i] == potion) {
+				inventory[i] = null;
+				break;
+			}
+		}
 
-	    removeConsumedOrNullItemsFromInventory();
-	    System.out.println("Usi "+potion.getNome()+"!, la tua salute ora è "+this.getHp()+"hp");
-	    return true;
+		removeConsumedOrNullItemsFromInventory();
+		System.out.println("Usi " + potion.getNome() + "!, la tua salute ora è " + this.getHp() + "hp");
+		return true;
 	}
 
-	
-	//funciton that allows the player to use a bomb to open a secret door
+	// funciton that allows the player to use a bomb to open a secret door
 	public boolean useBomb(Bomb bomb) {
 		if (bomb == null) {
 			System.out.println("Errore, bomba non trovata");
-	        return false;
-	    }
-	    Item[] inventory = this.getInventory();
-	    boolean trovato = false;
-	    for (Item item : inventory) {
-	        if (item == bomb) {
-	            trovato = true;
-	            break;
-	        }
-	    }
-	    if (!trovato) {
-	    	System.out.println("Bomba non trovata nell'inventario");
-	        return false;
-	    }
-	    
-	    //////////METTERE L'EFFETTO DELLA BOMBA QUI//////////////////'
-	    
-	    bomb.consume();
-		
+			return false;
+		}
+		Item[] inventory = this.getInventory();
+		boolean trovato = false;
+		for (Item item : inventory) {
+			if (item == bomb) {
+				trovato = true;
+				break;
+			}
+		}
+		if (!trovato) {
+			System.out.println("Bomba non trovata nell'inventario");
+			return false;
+		}
+
+		////////// METTERE L'EFFETTO DELLA BOMBA QUI//////////////////'
+
+		bomb.consume();
+
 		// Rimuove la bomba usata dall'inventario (la mette a null)
-	    for (int i = 0; i < inventory.length; i++) {
-	        if (inventory[i] == bomb) {
-	            inventory[i] = null;
-	            break;
-	        }
-	    }
-	    removeConsumedOrNullItemsFromInventory();
-	    System.out.println("Usi "+bomb.getNome()+"!");
-	    return true;
+		for (int i = 0; i < inventory.length; i++) {
+			if (inventory[i] == bomb) {
+				inventory[i] = null;
+				break;
+			}
+		}
+		removeConsumedOrNullItemsFromInventory();
+		System.out.println("Usi " + bomb.getNome() + "!");
+		return true;
 	}
-	
+
 	public boolean buyItem(Item item) {
-		if(item == null) {
+		if (item == null) {
 			System.out.println("Errore, item non trovato");
 			return false;
 		}
-		
-		if(item.getPrice() <= this.getValue() ) {
+
+		if (item.getPrice() <= this.getValue()) {
 			this.setValue(this.getValue() - item.getPrice());
-			System.out.println("Hai acquistato "+item.getNome()+"!");
+			System.out.println("Hai acquistato " + item.getNome() + "!");
 			return true;
 		}
 		System.out.println("Non hai abbastanza soldi!");
 		return false;
-		
-	}
-	
-	//function that allows the player to equip a weapon and increase their attack by its damage value
-	public boolean equipWeapon(Weapon weapon) {
-	    if (weapon == null) {
-	    	System.out.println("Errore, arma non trovata");
-	        return false;
-	    }
-	    //check if the player has already equipped a weapon
-	    if(this.getEquippedWeapon() != null) {
-	    	this.unequipWeapon(this.getEquippedWeapon());
-	    }
-	    
-	 //check if the weapon is in the inventory
-	    Item[] inventory = this.getInventory();
-	    boolean trovato = false;
-	    
-	    for (Item item : inventory) {
-	        if (item == weapon) {
-	            trovato = true;
-	            break;
-	        }
-	    }
 
-	    if (!trovato) {
-	    	System.out.println("Arma non trovata nell'inventario");
-	        return false;
-	    }
-	    //increase the player atk by the weapon
-	    this.setEquippedWeapon(weapon);
-	    weapon.equip();
-	    this.setEquippedWeaponDamage(weapon.getDamage());
-	    this.setAtk(this.getAtk()+this.getEquippedWeaponDamage());
-	    System.out.println("Equipaggi "+weapon.getNome()+"!, il tuo attacco aumenta a "+this.getAtk()+" atk");
-	    return true;
 	}
-	
-	public boolean unequipWeapon(Weapon weapon) {
-		//controllo se ho un arma equipaggiata
-		if(this.getEquippedWeapon() == null) {
-			return false; //non hai armi equipaggiate
+
+	// function that allows the player to equip a weapon and increase their attack
+	// by its damage value
+	public boolean equipWeapon(Weapon weapon) {
+		if (weapon == null) {
+			System.out.println("Errore, arma non trovata");
+			return false;
 		}
-		
-		if(this.getEquippedWeapon().equals(weapon)) {
-			//tolgo l'attacco dell'arma dall'attacco del player e disequipaggio l'arma
-			this.setAtk(this.getAtk()-this.getEquippedWeaponDamage());
+		// check if the player has already equipped a weapon
+		if (this.getEquippedWeapon() != null) {
+			this.unequipWeapon(this.getEquippedWeapon());
+		}
+
+		// check if the weapon is in the inventory
+		Item[] inventory = this.getInventory();
+		boolean trovato = false;
+
+		for (Item item : inventory) {
+			if (item == weapon) {
+				trovato = true;
+				break;
+			}
+		}
+
+		if (!trovato) {
+			System.out.println("Arma non trovata nell'inventario");
+			return false;
+		}
+		// increase the player atk by the weapon
+		this.setEquippedWeapon(weapon);
+		weapon.equip();
+		this.setEquippedWeaponDamage(weapon.getDamage());
+		this.setAtk(this.getAtk() + this.getEquippedWeaponDamage());
+		System.out.println("Equipaggi " + weapon.getNome() + "!, il tuo attacco aumenta a " + this.getAtk() + " atk");
+		return true;
+	}
+
+	public boolean unequipWeapon(Weapon weapon) {
+		// controllo se ho un arma equipaggiata
+		if (this.getEquippedWeapon() == null) {
+			return false; // non hai armi equipaggiate
+		}
+
+		if (this.getEquippedWeapon().equals(weapon)) {
+			// tolgo l'attacco dell'arma dall'attacco del player e disequipaggio l'arma
+			this.setAtk(this.getAtk() - this.getEquippedWeaponDamage());
 			this.setEquippedWeapon(null);
-			weapon.setEquipped(false);//bruteforce perchè weapon non ha il metodo unequip
+			weapon.setEquipped(false);// bruteforce perchè weapon non ha il metodo unequip
 			this.setEquippedWeaponDamage(0);
-			System.out.println("Disequipaggi "+weapon.getNome()+", il tuo attacco diminuisce a "+this.getAtk()+" atk");
+			System.out.println(
+					"Disequipaggi " + weapon.getNome() + ", il tuo attacco diminuisce a " + this.getAtk() + " atk");
 			return true;
 		}
 		return false;
@@ -405,158 +401,185 @@ public class Player extends Entity {
 	public boolean equipArmor(Armor armor) {
 		if (armor == null) {
 			System.out.println("Errore, armatura non trovata");
-	        return false;
-	    }
-	    //check if the player has already equipped an armor
-	    if(this.getEquippedArmor() != null) {
-	    	this.unequipArmor(this.getEquippedArmor());
-	    }
-	    
-	 //check if the armor is in the inventory
-	    Item[] inventory = this.getInventory();
-	    boolean trovato = false;
-	    
-	    for (Item item : inventory) {
-	        if (item == armor) {
-	            trovato = true;
-	            break;
-	        }
-	    }
-
-	    if (!trovato) {
-	    	System.out.println("Armatura non trovata nell'inventario");
-	        return false;
-	    }
-	    //increase the player armor by the armor's defence
-	    this.setEquippedArmor(armor);
-	    armor.equip();
-	    this.setEquippedArmorDefense(armor.getDefense());
-	    this.setDef(this.getDef()+this.getEquippedArmorDefense());
-	    System.out.println("Equipaggi "+armor.getNome()+"!, la tua difesa aumenta a "+this.getDef()+" def");
-	    return true;
-	}
-	
-	public boolean unequipArmor(Armor armor) {
-		//controllo se ho un arma equipaggiata
-		if(this.getEquippedArmor() == null) {
-			return false; //non hai armature equipaggiate
+			return false;
 		}
-		
-		if(this.getEquippedArmor().equals(armor)) {
-			//tolgo l'attacco dell'arma dall'attacco del player
-			this.setDef(this.getDef()-this.getEquippedArmorDefense());
+		// check if the player has already equipped an armor
+		if (this.getEquippedArmor() != null) {
+			this.unequipArmor(this.getEquippedArmor());
+		}
+
+		// check if the armor is in the inventory
+		Item[] inventory = this.getInventory();
+		boolean trovato = false;
+
+		for (Item item : inventory) {
+			if (item == armor) {
+				trovato = true;
+				break;
+			}
+		}
+
+		if (!trovato) {
+			System.out.println("Armatura non trovata nell'inventario");
+			return false;
+		}
+		// increase the player armor by the armor's defence
+		this.setEquippedArmor(armor);
+		armor.equip();
+		this.setEquippedArmorDefense(armor.getDefense());
+		this.setDef(this.getDef() + this.getEquippedArmorDefense());
+		System.out.println("Equipaggi " + armor.getNome() + "!, la tua difesa aumenta a " + this.getDef() + " def");
+		return true;
+	}
+
+	public boolean unequipArmor(Armor armor) {
+		// controllo se ho un arma equipaggiata
+		if (this.getEquippedArmor() == null) {
+			return false; // non hai armature equipaggiate
+		}
+
+		if (this.getEquippedArmor().equals(armor)) {
+			// tolgo l'attacco dell'arma dall'attacco del player
+			this.setDef(this.getDef() - this.getEquippedArmorDefense());
 			this.setEquippedArmor(null);
-			armor.setEquipped(false);//bruteforce perchè armor non ha il metodo unequip
+			armor.setEquipped(false);// bruteforce perchè armor non ha il metodo unequip
 			this.setEquippedArmorDefense(0);
-			System.out.println("Disequipaggi "+armor.getNome()+", la tua difesa scende a "+this.getDef()+" def");
+			System.out
+					.println("Disequipaggi " + armor.getNome() + ", la tua difesa scende a " + this.getDef() + " def");
 			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean discardItemFromInventory(Item item) {
-		if(item == null) {
+		if (item == null) {
 			System.out.println("Errore, item non trovato");
-			return false; //oggetto nullo
+			return false; // oggetto nullo
 		}
-		
-		if(item.equals(this.equippedArmor) || item.equals(this.equippedWeapon)) {
+
+		if (item.equals(this.equippedArmor) || item.equals(this.equippedWeapon)) {
 			System.out.println("Non puoi scartare un oggetto equipaggiato!");
-			return false; //impossibile scartare un oggetto equipaggiato	
+			return false; // impossibile scartare un oggetto equipaggiato
 		}
-		
-		if(item.isKey()) {
+
+		if (item.isKey()) {
 			System.out.println("Non puoi scartare un oggetto chiave!");
-			return false; //impossibile scartare un oggetto chiave
+			return false; // impossibile scartare un oggetto chiave
 		}
-		
+
 		else {
 			for (int i = 0; i < inventory.length; i++) {
-				if(item.equals(inventory[i])) {
+				if (item.equals(inventory[i])) {
 					inventory[i] = null;
 					removeConsumedOrNullItemsFromInventory();
-					System.out.println("Hai scartato "+item.getNome());
-					return true; //oggetto rimosso con successo
+					System.out.println("Hai scartato " + item.getNome());
+					return true; // oggetto rimosso con successo
 				}
 			}
 		}
 		return false;
 	}
-	
+
 	public void chooseAndChangeRoom() {
-	    if (currentRoom == null) {
-	        System.out.println("Errore: non sei in nessuna stanza.");
-	        return;
-	    }
+		if (currentRoom == null) {
+			System.out.println("Errore: non sei in nessuna stanza.");
+			return;
+		}
 
-	    Map<Direction, Room> doors = currentRoom.getDoor();
-	    if (doors.isEmpty()) {
-	        System.out.println("Non ci sono uscite disponibili.");
-	        return;
-	    }
+		Map<Direction, Room> doors = currentRoom.getDoor();
+		if (doors.isEmpty()) {
+			System.out.println("Non ci sono uscite disponibili.");
+			return;
+		}
 
-	    System.out.println("Dove vuoi andare? Uscite disponibili:");
-	    List<Direction> options = new ArrayList<>(doors.keySet());
-	    for (int i = 0; i < options.size(); i++) {
-	        Direction dir = options.get(i);
-	        Room next = doors.get(dir);
-	        System.out.println(i + 1 + ". " + dir + " → " + next.getName());
-	    }
+		System.out.println("Dove vuoi andare? Uscite disponibili:");
+		List<Direction> options = new ArrayList<>(doors.keySet());
+		for (int i = 0; i < options.size(); i++) {
+			Direction dir = options.get(i);
+			Room next = doors.get(dir);
+			System.out.println(i + 1 + ". " + dir + " → " + next.getName());
+		}
 
-	    Scanner scanner = new Scanner(System.in);
-	    int choice = -1;
+		Scanner scanner = new Scanner(System.in);
+		int choice = -1;
 
-	    while (choice < 1 || choice > options.size()) {
-	        System.out.print("Inserisci il numero della direzione: ");
-	        if (scanner.hasNextInt()) {
-	            choice = scanner.nextInt();
-	        } else {
-	            scanner.next(); // Consuma input errato
-	        }
+		while (choice < 1 || choice > options.size()) {
+			System.out.print("Inserisci il numero della direzione: ");
+			if (scanner.hasNextInt()) {
+				choice = scanner.nextInt();
+			} else {
+				scanner.next(); // Consuma input errato
+			}
 
-	        if (choice < 1 || choice > options.size()) {
-	            System.out.println("Scelta non valida. Riprova.");
-	        }
-	    }
+			if (choice < 1 || choice > options.size()) {
+				System.out.println("Scelta non valida. Riprova.");
+			}
+		}
 
-	    Direction selectedDir = options.get(choice - 1);
-	    Room nextRoom = currentRoom.getConnectedRoom(selectedDir);
-	    this.setCurrentRoom(nextRoom);
+		Direction selectedDir = options.get(choice - 1);
+		Room nextRoom = currentRoom.getConnectedRoom(selectedDir);
+		this.setCurrentRoom(nextRoom);
 
-	    System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
-	    
-	 // Avvia combattimento se ci sono mob
-	    if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
-	        List<Entity> nemici = new ArrayList<>(nextRoom.getMobs());
-	        CombatSystem combat = new CombatSystem(this, nemici);
-	        combat.startCombat();
-	    }
+		System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
+
+		// Avvia combattimento se ci sono mob
+		if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
+			List<Entity> nemici = new ArrayList<>(nextRoom.getMobs());
+			CombatSystem combat = new CombatSystem(this, nemici);
+			combat.startCombat();
+		}
 	}
 
 	public String examineRoom(Room room) {
 		StringBuilder sb = new StringBuilder();
-	    sb.append("Stanza: ").append(room.getName()).append("\n");
-	    //controllo se ci sono mob
-	    if (room.getMobs() != null && !room.getMobs().isEmpty()) {
-	        sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
-	    } else {
-	        sb.append("Non ci sono nemici qui.\n");
-	    }
-	    //controllo se ci sono item a terra
-	    if (room.getItems() != null && !room.getItems().isEmpty()) {
-	        sb.append("Oggetti trovati:\n");
-	        for (Item item : room.getItems()) {
-	            sb.append("- ").append(item.getNome()).append("\n");
-	        }//chiusura for
-	        
-	        
-	    }//chiusura if
-	    else {
-	        sb.append("Non ci sono oggetti nella stanza.\n");
-	    }
+		Scanner scanner = new Scanner(System.in);
 
-	    return sb.toString();
+		sb.append("Stanza: ").append(room.getName()).append("\n");
+
+		// controllo se ci sono mob
+		if (room.getMobs() != null && !room.getMobs().isEmpty()) {
+			sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
+		} else {
+			sb.append("Non ci sono nemici qui.\n");
+		}
+
+		// controllo se ci sono item a terra
+		if (room.getItems() != null && !room.getItems().isEmpty()) {
+			sb.append("Oggetti trovati:\n");
+
+			List<Item> daRimuovere = new ArrayList<>();
+			for (Item item : room.getItems()) {
+				sb.append("- ").append(item.getNome()).append("\n");
+
+				String risposta = "";
+				do {
+					System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
+					risposta = scanner.nextLine().trim().toLowerCase();
+
+					if (risposta.equals("s")) {
+						boolean raccolto = pickupItem(item);
+						if (raccolto) {
+							daRimuovere.add(item); // sarà rimosso dopo il ciclo
+						} else {
+							System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
+						}
+					} else if (risposta.equals("n")) {
+						System.out.println("Hai deciso di lasciare '" + item.getNome() + "' nella stanza.");
+					} else {
+						System.out.println("Input non valido. Digita 's' per sì o 'n' per no.");
+					}
+				} while (!risposta.equals("s") && !risposta.equals("n"));
+			}
+
+			// Rimuovi oggetti raccolti dalla stanza
+			room.getItems().removeAll(daRimuovere);
+
+		} else {
+			sb.append("Non ci sono oggetti nella stanza.\n");
+		}
+
+		return sb.toString();
 	}
-	
-	
+
+
 }

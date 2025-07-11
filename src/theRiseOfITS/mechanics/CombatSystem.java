@@ -16,8 +16,37 @@ public class CombatSystem {
         this.nemici = nemici;
         this.scanner = new Scanner(System.in);
     }
+    
+    public CombatSystem() {
+		// TODO Auto-generated constructor stub
+	}
+    
 
-    public void startCombat() {
+    public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public List<Entity> getNemici() {
+		return nemici;
+	}
+
+	public void setNemici(List<Entity> nemici) {
+		this.nemici = nemici;
+	}
+
+	public Scanner getScanner() {
+		return scanner;
+	}
+
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+
+	public void startCombat() {
         System.out.println("--- INIZIO COMBATTIMENTO ---");
 
         // Il ciclo continua finché il giocatore è vivo e ci sono ancora nemici
