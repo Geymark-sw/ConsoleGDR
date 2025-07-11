@@ -102,6 +102,7 @@ public class CombatSystem {
         // Ogni nemico vivo attacca il giocatore
         for (Entity nemico : nemici) {
             if (!nemico.isDead()) { // Controllo se il nemico è ancora vivo per poter attaccare
+            	System.out.println(nemico.getName() + " infligge "+ (nemico.getAtk()-player.getDef()) + " danni a "+player.getName()+"!");
                 nemico.attack(player);
                 // Se il giocatore muore a metà del turno dei nemici, si esce subito
                 if (player.isDead()) {

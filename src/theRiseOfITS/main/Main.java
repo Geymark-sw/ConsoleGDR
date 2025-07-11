@@ -75,7 +75,6 @@ public class Main {
 				System.out.println("2. Mostra inventario");
 				System.out.println("3. Cambia stanza");
 				System.out.println("4. Esci dal gioco");
-				floor.printMap();
 				
 				try {
 					choice = Integer.parseInt(input.nextLine());
