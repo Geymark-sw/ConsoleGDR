@@ -6,7 +6,7 @@ import theRiseOfITS.utilities.FactoryMob;
 
 public class BossRoom extends Room {
 	private Boss boss;
-	//questa stringa livello si connetto con NAME in floor per poter dire quale boss generare
+	//questa stringa livello si connette con NAME in floor per poter dire quale boss generare
 	private String nomelivello;
 	public BossRoom(String name,String nomelivello) {
 		super(name);

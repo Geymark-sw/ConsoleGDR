@@ -134,9 +134,9 @@ public class FactoryMob {
 	 * Creazione Mob, vengono creati Mob in base al case precedente
 	 */
 	private static Mob createSergioForm() {
-		int hp = 70 + random.nextInt(10);
+		int hp = 50 + random.nextInt(10);
 		int atk = 5 + random.nextInt(5);
-		int def = 0 + random.nextInt(10);
+		int def = 0 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba media", false, 25), new Potion("Pozione media", false, 25),
 				new Coin("Crediti formativi", false));
 		return new Mob("Sergio Formiggini", hp, atk, def, drop);
@@ -145,7 +145,7 @@ public class FactoryMob {
 	private static Mob createStudenteArmellini() {
 		int hp = 30 + random.nextInt(6);
 		int atk = 3 + random.nextInt(3);
-		int def = 0 + random.nextInt(10);
+		int def = 0 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba piccola", false, 10), new Potion("Pozione piccola", false, 10),
 				new Coin("Crediti formativi", false));
 		return new Mob("Studente Armellini", hp, atk, def, drop);
@@ -161,9 +161,9 @@ public class FactoryMob {
 	}
 
 	private static Mob createSegrataria() {
-		int hp = 90 + random.nextInt(5);
+		int hp = 40 + random.nextInt(5);
 		int atk = 6 + random.nextInt(5);
-		int def = 5 + random.nextInt(5);
+		int def = 0 + random.nextInt(5);
 		List<Item> drop = List.of(new Bomb("Bomba piccola", false, 10), new Potion("Pozione piccola", false, 10),
 				new Coin("Crediti formativi", false));
 		return new Mob("Segretaria Its", hp, atk, def, drop);
