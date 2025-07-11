@@ -117,7 +117,7 @@ public class Main {
 					+ "2 - Continua da una partita già esistente\n" + "3 - Esci dal gioco"); // Vuoi salvare i progessi?
 			try {
 				option = Integer.parseInt(input.nextLine());
-				if (option < 1 && option > 3) {
+				if (option < 1 || option > 3) {
 					System.out.println("Hai inserito un valore non valido.");
 				}
 
@@ -125,7 +125,7 @@ public class Main {
 				System.out.println("Hai inserito un valore non valido.");
 				
 			}
-		} while (option < 1 && option > 3); // Ciclo do while per forzare ad inserire un valore valido
+		} while (option < 1 || option > 3); // Ciclo do while per forzare ad inserire un valore valido
 
 		return option;
 	}
