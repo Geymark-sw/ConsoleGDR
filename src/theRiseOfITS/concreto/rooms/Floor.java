@@ -153,6 +153,15 @@ public class Floor {
 	        System.out.println("La mappa è vuota.");
 	        return;
 	    }
+	    
+	 // DEBUG: Stampa le coordinate di tutte le stanze
+	    System.out.println("=== DEBUG MAPPA ===");
+	    for (Map.Entry<Point, Room> entry : rooms.entrySet()) {
+	        Point p = entry.getKey();
+	        Room r = entry.getValue();
+	        System.out.println("Stanza: " + r.getName() + " -> Punto(" + p.x + "," + p.y + ") -> Room pos(" + r.getX() + "," + r.getY() + ")");
+	    }
+	    System.out.println("==================");
 
 	    int minX = Integer.MAX_VALUE;
 	    int maxX = Integer.MIN_VALUE;
