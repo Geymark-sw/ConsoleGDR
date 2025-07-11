@@ -1,11 +1,20 @@
 package theRiseOfITS.main;
 
+import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import theRiseOfITS.concreto.entity.Player;
 import theRiseOfITS.concreto.rooms.Floor;
 
 public class Main {
+	
+	private static Player player = null;
+	private static Floor floor = null;
 
 	private static Scanner input = new Scanner(System.in);
 
@@ -48,8 +57,8 @@ public class Main {
 		//Carica nuova partiata
 		System.out.println("Come vuoi chiamarti?");
 		String name = input.nextLine();
-		Player player = new Player(name);
-		Floor floor = new Floor("Piano terra");
+		Main.player = new Player(name); //Da salvare in file
+		Main.floor = new Floor("Piano terra"); //Da salvare in file
 		floor.generateMap();
 		player.setCurrentFloor(floor);
 		player.setCurrentRoom(floor.getInitialRoom());
@@ -66,6 +75,7 @@ public class Main {
 				System.out.println("2. Mostra inventario");
 				System.out.println("3. Cambia stanza");
 				System.out.println("4. Esci dal gioco");
+				floor.printMap();
 				
 				try {
 					choice = Integer.parseInt(input.nextLine());
@@ -127,20 +137,35 @@ public class Main {
 			System.out.println("Vuoi salvare i progressi fatti fin'ora?\n" + "1 - Si'" + "2 - No");
 			try {
 				option = Integer.parseInt(input.nextLine());
-				if (option < 1 && option > 2) {
+				if (option < 1 || option > 2) {
 					System.out.println("Hai inserito un valore non valido.");
 				}
 
 			} catch (Exception e) {
 				System.out.println("Hai inserito un valore non valido.");
 			}
-		} while (option < 1 && option > 2);
+		} while (option < 1 || option > 2);
 
 		if (option == 1) {
 			// Salva dati su file
+			saveGame();
+			
 		}
 
-		return;
+	}
+
+	private static void saveGame() {
+		List<Object> data = new ArrayList<Object>();
+		data.add(Main.player);
+		data.add(Main.floor);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.writerWithDefaultPrettyPrinter().writeValue(new File("salvataggio.json"), data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
