@@ -6,4 +6,8 @@ public class InitialRoom extends Room {
 	public InitialRoom(String name) {
 		super(name);
 	}
+	
+	public InitialRoom() {
+		// TODO Auto-generated constructor stub
+	}
 }

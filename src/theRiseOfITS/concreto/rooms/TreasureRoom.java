@@ -19,6 +19,11 @@ public class TreasureRoom extends Room {
 		generateGoldChest();
 	}
 
+	
+	public TreasureRoom() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	private void generateGoldChest() {
 		List<Item> contenuto = new ArrayList<>();
 		Random rand = new Random();

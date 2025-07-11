@@ -30,6 +30,9 @@ public abstract class Room {
 		this.doors = new EnumMap<>(Direction.class);
 	}
 	
+	public Room() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getName() {
 		return name;

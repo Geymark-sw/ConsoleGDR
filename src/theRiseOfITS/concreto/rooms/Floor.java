@@ -19,6 +19,10 @@ public class Floor {
 
 		this.name = name;
 	}
+	
+	public Floor() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 

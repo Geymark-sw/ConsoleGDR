@@ -21,6 +21,10 @@ public class RandomRoom extends Room {
 		this.setItems(FactoryItem.generaDropCasuale(3));
 		generaChest();
 	}
+	
+	public RandomRoom() {
+		// TODO Auto-generated constructor stub
+	}
 
 	private void generaChest() {
 		Random rand = new Random();

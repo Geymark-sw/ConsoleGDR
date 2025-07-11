@@ -14,6 +14,10 @@ public class MerchantRoom extends Room{
 		super(name);
 		this.merchant = FactoryMerchant.creaMerchant();
 	}
+	
+	public MerchantRoom() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Merchant getMerchant() {
 		return merchant;
