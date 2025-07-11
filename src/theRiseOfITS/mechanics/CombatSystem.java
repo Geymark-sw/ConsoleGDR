@@ -1,9 +1,13 @@
 package theRiseOfITS.mechanics;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import theRiseOfITS.astratto.Entity;
+import theRiseOfITS.astratto.Item;
+import theRiseOfITS.concreto.entity.Boss;
+import theRiseOfITS.concreto.entity.Mob;
 import theRiseOfITS.concreto.entity.Player;
 import theRiseOfITS.concreto.rooms.BossRoom;
 
@@ -94,6 +98,7 @@ public class CombatSystem {
         if (nemicoScelto.isDead()) {
             System.out.println(nemicoScelto.getName() + " è stato sconfitto!");
             nemicoScelto.setHp(0);
+            dropLoot(nemicoScelto);
             nemici.remove(nemicoScelto);
         }
     }
@@ -136,5 +141,24 @@ public class CombatSystem {
             System.out.println("SCONFITTA! Sei stato battuto.");
         }
     }
+    
+    private void dropLoot(Entity nemico) {
+        List<Item> loot = new ArrayList<>();
+
+        if (nemico instanceof Boss boss) {
+            loot = boss.getListDrop();
+        } else if (nemico instanceof Mob mob) {
+            loot = mob.getListDrop();
+        }
+
+        if (!loot.isEmpty() && player.getCurrentRoom() != null) {
+        	player.getCurrentRoom().getItems().addAll(loot);
+            System.out.println(nemico.getName() + " ha droppato:");
+            for (Item item : loot) {
+                System.out.println(" - " + item.getNome());
+            }
+        }
+    }
+
 
 }
