@@ -1,20 +1,8 @@
 
-//package theRiseOfITS.utilities;
-//
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Random;
-//import java.io.File;
-//
-//import com.fasterxml.jackson.core.type.TypeReference;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//
-//import theRiseOfITS.astratto.Entity;
-//import theRiseOfITS.astratto.Item;
-//
-//public class utility {
-//	//function to check the health status of a given entity
+package theRiseOfITS.utilities;
+
+public class utility {
+	//function to check the health status of a given entity
 //	public static int checkHp(Entity entity) {
 //		return entity.getHp();
 //	}
@@ -56,4 +44,19 @@
 //            return List.of(); // ritorna lista vuota se c'è un errore
 //        }
 //    }
-//}
+
+	public static void pause(int seconds) {
+	    try {
+	        Thread.sleep(seconds * 1000); // Converte secondi in millisecondi
+	    } catch (InterruptedException e) {
+	        Thread.currentThread().interrupt();
+	        System.out.println("Pausa interrotta!");
+	    }
+	}
+	
+	// Metodo per pause con messaggio
+	public static void pauseWithMessage(String message, int seconds) {
+	    System.out.println(message);
+	    pause(seconds);
+	}
+}

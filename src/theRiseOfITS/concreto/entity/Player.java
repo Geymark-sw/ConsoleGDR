@@ -17,6 +17,7 @@ import theRiseOfITS.concreto.items.Weapon;
 import theRiseOfITS.concreto.rooms.Direction;
 import theRiseOfITS.concreto.rooms.Floor;
 import theRiseOfITS.mechanics.CombatSystem;
+import theRiseOfITS.utilities.utility;
 
 public class Player extends Entity {
 
@@ -530,18 +531,12 @@ public class Player extends Entity {
 		}
 	}
 
-	public String examineRoom(Room room) {
+	public void examineRoom(Room room) {
 		StringBuilder sb = new StringBuilder();
 		Scanner scanner = new Scanner(System.in);
-
+		
+		System.out.println();
 		sb.append("Stanza: ").append(room.getName()).append("\n");
-
-		// controllo se ci sono mob
-		if (room.getMobs() != null && !room.getMobs().isEmpty()) {
-			sb.append("Nemico presente: ").append(room.getMobs()).append("\n");
-		} else {
-			sb.append("Non ci sono nemici qui.\n");
-		}
 
 		// controllo se ci sono item a terra
 		if (room.getItems() != null && !room.getItems().isEmpty()) {
@@ -550,7 +545,6 @@ public class Player extends Entity {
 			List<Item> daRimuovere = new ArrayList<>();
 			for (Item item : room.getItems()) {
 				sb.append("- ").append(item.getNome()).append("\n");
-
 				String risposta = "";
 				do {
 					System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
@@ -578,7 +572,8 @@ public class Player extends Entity {
 			sb.append("Non ci sono oggetti nella stanza.\n");
 		}
 
-		return sb.toString();
+		System.out.println(sb.toString());
+        utility.pause(2);
 	}
 	
 	public void openInventoryMenu() {

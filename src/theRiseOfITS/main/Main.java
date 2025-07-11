@@ -88,7 +88,7 @@ public class Main {
 			} while (choice < 1 || choice > 4); //Ciclo do while per forzare ad inserire un valore valido
 			
 			switch(choice) {
-				case 1 : System.out.println(player.examineRoom(player.getCurrentRoom()));
+				case 1 : player.examineRoom(player.getCurrentRoom());
 					break;
 				case 2 : player.showInventory();
 					break;
