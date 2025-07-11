@@ -19,7 +19,7 @@ public class BossRoom extends Room {
 	}
 
 	public BossRoom() {
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub	
 	}
 
 	public Boss getBoss() {
