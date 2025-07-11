@@ -221,8 +221,8 @@ public class Player extends Entity {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Inventario:\n");
 
-		for (int i = 0; i < inventory.length; i++) {
-			Item item = inventory[i];
+		for (int i = 1; i <= inventory.length; i++) {
+			Item item = inventory[i - 1];
 			if (item != null) {
 				sb.append("Slot ").append(i).append(": ").append(item.getNome()).append("\n");
 			} else {
@@ -597,57 +597,61 @@ public class Player extends Entity {
 	public void openInventoryMenu() {
 	    Scanner scanner = new Scanner(System.in);
 	    boolean continueMenu = true;
+	    Integer choice = 0;
 	    
-	    while (continueMenu) {
-	        System.out.println("\n=== INVENTARIO ===");
-	        showInventory();
-	        System.out.println("\nCosa vuoi fare?");
-	        System.out.println("1. Equipaggia arma");
-	        System.out.println("2. Equipaggia armatura");
-	        System.out.println("3. Usa pozione");
-	        System.out.println("4. Usa bomba");
-	        System.out.println("5. Scarta oggetto");
-	        System.out.println("6. Mostra equipaggiamento attuale");
-	        System.out.println("7. Disequipaggia arma");
-	        System.out.println("8. Disequipaggia armatura");
-	        System.out.println("9. Esci dall'inventario");
-	        
-	        System.out.print("Scelta: ");
-	        int choice = scanner.nextInt();
-	        scanner.nextLine(); // Consuma il newline
-	        
-	        switch (choice) {
-	            case 1:
-	                equipWeaponMenu();
-	                break;
-	            case 2:
-	                equipArmorMenu();
-	                break;
-	            case 3:
-	                usePotionMenu();
-	                break;
-	            case 4:
-	                useBombMenu();
-	                break;
-	            case 5:
-	                discardItemMenu();
-	                break;
-	            case 6:
-	                showCurrentEquipment();
-	                break;
-	            case 7:
-	                unequipCurrentWeapon();
-	                break;
-	            case 8:
-	                unequipCurrentArmor();
-	                break;
-	            case 9:
-	                continueMenu = false;
-	                break;
-	            default:
-	                System.out.println("Scelta non valida!");
-	        }
-	    }
+	        do {
+				System.out.println("\n=== INVENTARIO ===");
+				showInventory();
+				System.out.println("\nCosa vuoi fare?");
+				System.out.println("1. Equipaggia arma");
+				System.out.println("2. Equipaggia armatura");
+				System.out.println("3. Usa pozione");
+				System.out.println("4. Usa bomba");
+				System.out.println("5. Scarta oggetto");
+				System.out.println("6. Mostra equipaggiamento attuale");
+				System.out.println("7. Disequipaggia arma");
+				System.out.println("8. Disequipaggia armatura");
+				System.out.println("9. Esci dall'inventario");
+				System.out.print("Scelta: ");
+				
+				try {
+					choice = Integer.parseInt(scanner.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println("Scelta non valida");
+				}
+				
+				switch (choice) {
+				case 1:
+					equipWeaponMenu();
+					break;
+				case 2:
+					equipArmorMenu();
+					break;
+				case 3:
+					usePotionMenu();
+					break;
+				case 4:
+					useBombMenu();
+					break;
+				case 5:
+					discardItemMenu();
+					break;
+				case 6:
+					showCurrentEquipment();
+					break;
+				case 7:
+					unequipCurrentWeapon();
+					break;
+				case 8:
+					unequipCurrentArmor();
+					break;
+				case 9:
+					continueMenu = false;
+					break;
+				
+				}
+			} while (continueMenu || choice < 1 || choice > 9);
+	    
 	}
 
 	private void equipWeaponMenu() {
@@ -764,21 +768,29 @@ public class Player extends Entity {
 	private void discardItemMenu() {
 	    System.out.println("\n=== SCARTA OGGETTO ===");
 	    showInventory();
-	    
-	    System.out.print("Quale slot vuoi scartare? (0 per annullare): ");
+	    int slot = -1;
 	    Scanner scanner = new Scanner(System.in);
-	    int slot = scanner.nextInt();
-	    
-	    if (slot > 0 && slot <= inventory.length) {
-	        Item item = inventory[slot - 1];
-	        if (item != null) {
-	            discardItemFromInventory(item);
-	        } else {
-	            System.out.println("Slot vuoto!");
-	        }
-	    } else if (slot != 0) {
-	        System.out.println("Slot non valido!");
-	    }
+	    do {
+	    	
+	    	System.out.print("Quale slot vuoi scartare? (0 per annullare): ");
+			try {
+				slot = Integer.parseInt(scanner.nextLine());
+				if (slot < 0 || slot > inventory.length) {
+					System.out.println("Slot non valido");
+				}
+
+			} catch (Exception e) {
+				System.out.println("Slot non valido");
+			}
+			if (slot > 0 && slot <= inventory.length) {
+				Item item = inventory[slot - 1];
+				if (item != null) {
+					discardItemFromInventory(item);
+				} else {
+					System.out.println("Slot vuoto!");
+				}
+			} 
+		} while (slot < 0 || slot > inventory.length);
 	}
 
 	private void showCurrentEquipment() {
