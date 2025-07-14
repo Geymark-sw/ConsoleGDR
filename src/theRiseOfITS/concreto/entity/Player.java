@@ -188,10 +188,10 @@ public class Player extends Entity {
 			for (Item item : chest.getOggettiContenuti()) {
 				System.out.println("- " + item.getNome());
 			}
-			System.out.print("Cosa vuoi raccogliere? (digita 'raccogli [nome oggetto]' o 'lascia' per chiudere): ");
+			System.out.print("Cosa vuoi raccogliere? (digita 'raccogli [nome oggetto]' o 'esci' per chiudere): ");
 			String input = scanner.nextLine().trim().toLowerCase();
 
-			if (input.equals("lascia")) {
+			if (input.equals("esci")) {
 				System.out.println("Chiudi la chest, lasciando gli oggetti rimanenti.");
 				return true;
 			}
@@ -549,7 +549,7 @@ public class Player extends Entity {
 		if(nextRoom instanceof TreasureRoom treasureRoom && treasureRoom.getChest() != null) {
 			Chest chest = treasureRoom.getChest();
 			System.out.println("\nEntri in una Stanza del Tesoro! C'è una " + chest.getNome() + ".");
-			//openChest(chest); // Il giocatore interagisce con la chest
+			openChest(chest); // Il giocatore interagisce con la chest
 		}
 	}
 

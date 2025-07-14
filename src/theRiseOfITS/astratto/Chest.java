@@ -1,5 +1,6 @@
 package theRiseOfITS.astratto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Chest {
