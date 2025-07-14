@@ -130,7 +130,7 @@ public abstract class Room {
 	}
 
 	public void rimuoviItemRaccolti() {
-	    items.removeIf(Item::isRaccolto); // supponendo che Item abbia isCollected()
+	    items.removeIf(Item::isRaccolto);
 	}
 
 
