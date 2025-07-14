@@ -545,48 +545,63 @@ public class Player extends Entity {
 	
 
 	public void examineRoom(Room room) {
-		StringBuilder sb = new StringBuilder();
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.println();
-		sb.append("Stanza: ").append(room.getName()).append("\n");
+	    Scanner scanner = new Scanner(System.in);
+	    System.out.println("\nStai esaminando la stanza: " + room.getName());
 
-		// controllo se ci sono item a terra
-		if (room.getItems() != null && !room.getItems().isEmpty()) {
-			sb.append("Oggetti trovati:\n");
+	    // Ciclo interattivo che continua finché ci sono oggetti o l'utente non esce
+	    while (true) {
+	        boolean itemsPresent = room.getItems() != null && !room.getItems().isEmpty();
 
-			List<Item> daRimuovere = new ArrayList<>();
-			for (Item item : room.getItems()) {
-				sb.append("- ").append(item.getNome()).append("\n");
-				String risposta = "";
-				do {
-					System.out.print("Vuoi raccogliere '" + item.getNome() + "'? (s/n): ");
-					risposta = scanner.nextLine().trim().toLowerCase();
+	        if (itemsPresent) {
+	            System.out.println("\nOggetti a terra:");
+	            // Mostra la lista aggiornata degli oggetti
+	            for (Item item : room.getItems()) {
+	                System.out.println("- " + item.getNome());
+	            }
+	            System.out.print("Cosa vuoi fare? (es. 'raccogli [nome oggetto]' o 'esci'): ");
+	        } else {
+	            System.out.println("Non ci sono più oggetti da raccogliere nella stanza.");
+	            break; // Esce dal ciclo se non ci sono più oggetti
+	        }
 
-					if (risposta.equals("s")) {
-						boolean raccolto = pickupItem(item);
-						if (raccolto) {
-							daRimuovere.add(item); // sarà rimosso dopo il ciclo
-						} else {
-							System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
-						}
-					} else if (risposta.equals("n")) {
-						System.out.println("Hai deciso di lasciare '" + item.getNome() + "' nella stanza.");
-					} else {
-						System.out.println("Input non valido. Digita 's' per sì o 'n' per no.");
-					}
-				} while (!risposta.equals("s") && !risposta.equals("n"));
-			}
+	        String input = scanner.nextLine().trim().toLowerCase();
 
-			// Rimuovi oggetti raccolti dalla stanza
-			room.getItems().removeAll(daRimuovere);
+	        // Se l'utente vuole uscire dall'interazione
+	        if (input.equals("esci")) {
+	            System.out.println("Smetti di esaminare la stanza.");
+	            break;
+	        }
 
-		} else {
-			sb.append("Non ci sono oggetti nella stanza.\n");
-		}
-
-		System.out.println(sb.toString());
-        utility.pause(2);
+	        // Se l'utente vuole raccogliere un oggetto
+	        if (input.startsWith("raccogli ")) {
+	            String itemName = input.substring(9).trim();
+	            Item itemToPickup = null;
+	            
+	            // Cerca l'oggetto nella stanza per nome (ignorando maiuscole/minuscole)
+	            for (Item item : room.getItems()) {
+	                if (item.getNome().equalsIgnoreCase(itemName)) {
+	                    itemToPickup = item;
+	                    break;
+	                }
+	            }
+	            
+	            if (itemToPickup != null) {
+	                // Prova a raccogliere l'oggetto
+	                if (pickupItem(itemToPickup)) {
+	                    System.out.println("Hai raccolto: " + itemToPickup.getNome());
+	                    room.getItems().remove(itemToPickup); // Rimuove l'oggetto dalla stanza
+	                } else {
+	                    System.out.println("Inventario pieno! Non puoi raccogliere l'oggetto.");
+	                    break;
+	                }
+	            } else {
+	                System.out.println("Oggetto non trovato nella stanza: " + itemName);
+	            }
+	        } else {
+	            System.out.println("Comando non valido.");
+	        }
+	    }
+	    utility.pause(2);
 	}
 	
 	public void openInventoryMenu() {
