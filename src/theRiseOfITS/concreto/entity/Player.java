@@ -264,16 +264,12 @@ public class Player extends Entity {
 		return false;
 	}
 	
-	/**
-     * Allows the player to heal using a healing potion from their inventory.
-     * The player will search for the first available Potion in their inventory.
-     */
     public void heal() {
         Potion healingPotion = null;
         for (Item item : inventory) {
             if (item instanceof Potion) {
                 healingPotion = (Potion) item;
-                break; // Found the first potion, use it
+                break;
             }
         }
 
@@ -284,14 +280,13 @@ public class Player extends Entity {
             }
 
             int currentHp = this.getHp();
-            int amountToHeal = healingPotion.getHp(); // Get healing amount from potion
+            int amountToHeal = healingPotion.getHp();
             
-            // Calculate new HP, ensuring it doesn't exceed maxHp
             int newHp = Math.min(currentHp + amountToHeal, this.maxHp);
             setHp(newHp);
 
-            healingPotion.consume(); // Mark the potion as used
-            removeConsumedOrNullItemsFromInventory(); // Clean up inventory
+            healingPotion.consume();
+            removeConsumedOrNullItemsFromInventory();
 
             System.out.println(getName() + " ha usato " + healingPotion.getNome() + " e recuperato " + (newHp - currentHp) + " HP!");
             System.out.println("HP attuali: " + getHp() + "/" + this.maxHp);
@@ -302,20 +297,17 @@ public class Player extends Entity {
 
 
 	public boolean usePotion(Potion potion) {
-		// This method is now redundant if 'heal()' handles all potion usage during combat.
-		// If you intend to have other types of potions or specific potion usage outside of combat,
-		// you might keep this. For basic healing during combat, the new heal() method is sufficient.
 		if (potion == null) {
 			System.out.println("Errore, pozione non trovata.");
 			return false;
 		}
 
-		if (this.getHp() >= this.maxHp) { // Use maxHp here
+		if (this.getHp() >= this.maxHp) {
 			System.out.println("Hai già la salute al massimo!");
 			return false;
 		}
 
-		if (this.getHp() + potion.getHp() > this.maxHp) { // Use maxHp here
+		if (this.getHp() + potion.getHp() > this.maxHp) {
 			this.setHp(this.maxHp);
 		} else {
 			this.setHp(this.getHp() + potion.getHp());
@@ -614,10 +606,10 @@ public class Player extends Entity {
 			System.out.println("\nComandi disponibili:");
 			System.out.println("- equipaggia [nome oggetto]");
 			System.out.println("- disequipaggia [arma/armatura]");
-			System.out.println("- usa [nome oggetto]"); // This will primarily be for Bomb now
+			System.out.println("- usa [nome oggetto]");
 			System.out.println("- scarta [nome oggetto]");
 			System.out.println("- mostra equipaggiamento");
-			System.out.println("- curati"); // Added new command for healing
+			System.out.println("- curati");
 			System.out.println("- esci");
 			System.out.print("Cosa vuoi fare? ");
 
@@ -646,7 +638,7 @@ public class Player extends Entity {
 						System.out.println("Comando non riconosciuto. Prova con 'mostra equipaggiamento'.");
 					}
 					break;
-				case "curati": // New case for healing
+				case "curati":
 					heal();
 					break;
 				case "esci":
@@ -795,7 +787,7 @@ public class Player extends Entity {
 			System.out.println("Armatura: Nessuna armatura equipaggiata");
 		}
 		System.out.println("\nStatistiche totali:");
-		System.out.println("HP: " + this.getHp() + "/" + this.maxHp); // Show current/max HP
+		System.out.println("HP: " + this.getHp() + "/" + this.maxHp);
 		System.out.println("ATK: " + this.getAtk());
 		System.out.println("DEF: " + this.getDef());
 		System.out.println("Monete: " + this.getValue());
