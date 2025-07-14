@@ -19,9 +19,14 @@ public class FactoryMerchant {
 		inventario.add(new Weapon("Spada di Ferro", false, 10));
 		inventario.add(new Armor("Scudo di Legno", false, 10));
 		inventario.add(new Bomb("Bomba media", false,25));
+		inventario.add(new Weapon("Sigaretta elettronica", false, 30));
+		inventario.add(new Armor("Camicia di lino", false, 30));
+		inventario.add(new Weapon("Racchetta da ping-pong", false, 20));
+		
+		
 		
 		Merchant mercante = new Merchant("Nicoletta", 900, 50, 50, inventario,"Sono qui per aiutarti ad abbattere questa società marcia");
-		mercante.assegnaPrezziCasuali(5, 200);
+		mercante.assegnaPrezziCasuali(20, 200);
 		
 		return mercante;
 		
