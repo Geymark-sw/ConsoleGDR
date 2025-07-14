@@ -133,7 +133,6 @@ public class CombatSystem {
                 if (bossRoom.getBoss() != null && bossRoom.getBoss().isDead()) {
                     System.out.println("🏆 Hai sconfitto il Boss di questo livello!");
                     bossRoom.rimuoviBossSconfitti();
-                    // 🔁 qui potresti attivare un flag globale o notificare al GameManager che si può salire di livello
                 }
             }
 
@@ -146,7 +145,7 @@ public class CombatSystem {
         List<Item> loot = new ArrayList<>();
 
         if (nemico instanceof Boss boss) {
-            loot = boss.getListDrop();
+            loot = boss.getDropsList();
         } else if (nemico instanceof Mob mob) {
             loot = mob.getListDrop();
         }

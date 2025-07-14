@@ -526,29 +526,23 @@ public class Player extends Entity {
 		System.out.println("Ti sei spostato verso " + selectedDir + " nella stanza: " + nextRoom.getName());
 
 		// Avvia combattimento se ci sono mob o boss
-		checkAndStartCombatWithMobs(nextRoom);
-		checkAndStartCombatWithBoss(nextRoom);
-		
-	}
-	
-	private void checkAndStartCombatWithMobs(Room room) {
-		if (room.getMobs() != null && !room.getMobs().isEmpty() ) {
-			List<Entity> nemici = new ArrayList<>(room.getMobs());
-			CombatSystem combat = new CombatSystem(this, nemici);
-			combat.startCombat();
+		 List<Entity> nemici = new ArrayList<>();
+		    if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
+		        nemici.addAll(nextRoom.getMobs());
+		    }
+
+		    if (nextRoom instanceof BossRoom bossRoom) {
+		        if (bossRoom.getBoss() != null) {
+		            nemici.add(bossRoom.getBoss());
+		        }
+		    }
+
+		    if (!nemici.isEmpty()) {
+		        CombatSystem combat = new CombatSystem(this, nemici);
+		        combat.startCombat();
+		    }
 		}
-	}
 	
-	private void checkAndStartCombatWithBoss(Room room) {
-	    if (room instanceof BossRoom bossRoom) {
-	        if (bossRoom.getBoss() != null) {
-	            List<Entity> nemici = new ArrayList<>();
-	            nemici.add(bossRoom.getBoss());
-	            CombatSystem combat = new CombatSystem(this, nemici);
-	            combat.startCombat();
-	        }
-	    }
-	}
 
 	public void examineRoom(Room room) {
 		StringBuilder sb = new StringBuilder();
