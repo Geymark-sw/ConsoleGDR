@@ -53,6 +53,9 @@ public class CombatSystem {
 
 	public void startCombat() {
         System.out.println("--- INIZIO COMBATTIMENTO ---");
+        if(nemici.getFirst() instanceof Boss boss) {
+        	boss.speak();
+        }
 
         while (!player.isDead() && !nemici.isEmpty()) {
             turnoGiocatore();
@@ -67,24 +70,29 @@ public class CombatSystem {
 
     private void turnoGiocatore() {
         System.out.println("\n--- TURNO DI " + player.getName() + " ---");
-        System.out.println(player); 
+        System.out.println(player);
+        System.out.println();
+        System.out.println("Nemici:");
+        for (int i = 0; i < nemici.size(); i++) {
+            System.out.println((i + 1) + ": " + nemici.get(i));
+        }
 
         String comando = "";
         boolean comandoValido = false;
 
         while (!comandoValido) {
-            System.out.println("Cosa vuoi fare? (scrivi 'attacca', 'curati' o 'inventario')");
+            System.out.println("Cosa vuoi fare? (scrivi 'atk', 'heal' o 'inv')");
             System.out.print("Comando: ");
             comando = scanner.nextLine().trim().toLowerCase(); 
 
-            if (comando.equals("attacca") || comando.equals("curati") || comando.equals("inventario")) {
+            if (comando.equals("atk") || comando.equals("heal") || comando.equals("inv")) {
                 comandoValido = true;
             } else {
-                System.out.println("Comando non valido. Inserisci 'attacca', 'curati' o 'inventario'.");
+                System.out.println("Comando non valido. Inserisci 'atk', 'heal' o 'inv'.");
             }
         }
 
-        if (comando.equals("attacca")) { 
+        if (comando.equals("atk")) { 
             // Mostra la lista dei nemici che il giocatore può attaccare
             System.out.println("Scegli un nemico da attaccare:");
             for (int i = 0; i < nemici.size(); i++) {
@@ -112,9 +120,9 @@ public class CombatSystem {
                 dropLoot(nemicoScelto);
                 nemici.remove(nemicoScelto);
             }
-        } else if (comando.equals("curati")) { 
+        } else if (comando.equals("heal")) { 
             player.heal(); 
-        } else if (comando.equals("inventario")) {
+        } else if (comando.equals("inv")) {
             // Entra nel menu inventario per una singola azione
             player.openCombatInventoryMenu(); // Nuovo metodo nel Player
         }

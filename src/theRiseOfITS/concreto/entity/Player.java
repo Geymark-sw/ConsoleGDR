@@ -18,8 +18,8 @@ import theRiseOfITS.concreto.items.Weapon;
 import theRiseOfITS.concreto.rooms.BossRoom;
 import theRiseOfITS.concreto.rooms.Direction;
 import theRiseOfITS.concreto.rooms.Floor;
+import theRiseOfITS.concreto.rooms.MerchantRoom;
 import theRiseOfITS.mechanics.CombatSystem;
-import theRiseOfITS.utilities.utility;
 
 public class Player extends Entity {
 
@@ -31,14 +31,14 @@ public class Player extends Entity {
 	private Armor equippedArmor = null;
 	private Room currentRoom;
 	private Floor currentFloor;
-	private int maxHp; // Added to store maximum HP for healing
+	private int maxHp;
 
 	public Player(String name) {
 		// Imposto hp, atk, def iniziali fissi
-		super(name, 100, 10, 5); // esempio: 100 HP, 10 ATK, 5 DEF
-		this.maxHp = 100; // Initialize maxHp
+		super(name, 99999, 99999999, 5); //valori moddati
+		this.maxHp = 100;
 		this.inventory = new Item[10];
-		this.value = 0;
+		this.value = 999999; //valore moddato
 
 		// Aggiungo i bonus da equipaggiamento
 		this.setDef(this.getDef() + equippedArmorDefense);
@@ -254,6 +254,15 @@ public class Player extends Entity {
 		return risultati;
 	}
 	
+	public boolean hasInventorySpace() {
+		for (Item item : this.inventory) {
+			if (item == null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
      * Allows the player to heal using a healing potion from their inventory.
      * The player will search for the first available Potion in their inventory.
@@ -423,6 +432,51 @@ public class Player extends Entity {
 		}
 		return false;
 	}
+	
+	public void tradeWithMerchant(Merchant merchant) {
+		Scanner scanner = new Scanner(System.in);
+		boolean trading = true;
+
+		System.out.println("\n--- Benvenuto nel negozio di " + merchant.getName() + "! ---");
+		merchant.speak();
+
+		while (trading) {
+			System.out.println("\nLe tue monete: " + this.getValue());
+			merchant.mostraInventario(); // mostra gli oggetti del mercante
+			System.out.println("\nCosa vuoi fare?");
+			System.out.println(" - Compra [numero oggetto] (es. 'compra 1')");
+			System.out.println(" - Esci");
+			System.out.print("Comando: ");
+			String input = scanner.nextLine().trim().toLowerCase();
+
+			if (input.equals("esci")) {
+				System.out.println("Arrivederci! Torna a trovarci.");
+				trading = false;
+			} else if (input.startsWith("compra ")) {
+				try {
+					int itemIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+					if (itemIndex >= 0 && itemIndex < merchant.getInventario().size()) {
+						Item itemToBuy = merchant.getInventario().get(itemIndex);
+						if (this.getValue() >= itemToBuy.getPrice()) {
+							if (this.hasInventorySpace()) {
+								merchant.vendi(itemIndex, this);
+							} else {
+								System.out.println("Il tuo inventario è pieno! Non puoi comprare questo oggetto.");
+							}
+						} else {
+							System.out.println("Non hai abbastanza monete per acquistare " + itemToBuy.getNome() + ".");
+						}
+					} else {
+						System.out.println("Numero oggetto non valido.");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Comando non valido. Usa 'compra [numero oggetto]'.");
+				}
+			} else {
+				System.out.println("Comando non riconosciuto.");
+			}
+		}
+	}
 
 	public void chooseAndChangeRoom() {
 		if (currentRoom == null) {
@@ -465,6 +519,8 @@ public class Player extends Entity {
 			System.out.println("Non c'è un'uscita in quella direzione.");
 			return;
 		}
+		
+		///// CAMBIO STANZA /////
 
 		Room nextRoom = currentRoom.getConnectedRoom(selectedDir);
 		this.setCurrentRoom(nextRoom);
@@ -475,12 +531,19 @@ public class Player extends Entity {
 		if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
 			nemici.addAll(nextRoom.getMobs());
 		}
+		// Controllo se è una bossroom
 		if (nextRoom instanceof BossRoom bossRoom && bossRoom.getBoss() != null) {
 			nemici.add(bossRoom.getBoss());
 		}
 		if (!nemici.isEmpty()) {
 			CombatSystem combat = new CombatSystem(this, nemici);
 			combat.startCombat();
+		}
+		
+		if(nextRoom instanceof MerchantRoom merchantRoom && merchantRoom.getMerchant() != null) {
+			Merchant mercante = merchantRoom.getMerchant();
+			tradeWithMerchant(merchantRoom.getMerchant());
+			
 		}
 	}
 
