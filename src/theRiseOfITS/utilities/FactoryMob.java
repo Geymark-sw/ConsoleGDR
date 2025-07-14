@@ -140,8 +140,8 @@ public class FactoryMob {
 		int atk = 15;
 		int def = 15;
 		List<Item> drop = List.of(new Bomb("Bomba grande", false, 50), new Potion("Pozione grande", false, 50),
-				new Coin("Crediti formativi", false), new Weapon("Spacca PC", false, 15),
-				new Armor("Scarpe LV", false, 15));
+				new Coin("Crediti formativi", false), new Weapon("Spacca PC", false, 20),
+				new Armor("Scarpe LV", false, 20));
 
 		return new Boss("Claudia, la raccomandata", hp, atk, def, drop, "Faccio sempre tutto io");
 	}
