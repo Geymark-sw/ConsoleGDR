@@ -7,15 +7,15 @@ import theRiseOfITS.utilities.FactoryMob;
 
 public class BossRoom extends Room {
 	private Boss boss;
-	// questa stringa livello si connette con NAME in floor per poter dire quale
+	// questa stringa piano si connette con NAME in floor per poter dire quale
 	// boss generare
-	private String nomelivello;
+	private String nomePiano;
 
-	public BossRoom(String name, String nomelivello) {
+	public BossRoom(String name, String nomePiano) {
 		super(name);
 		this.setKey(true);
-		this.nomelivello = nomelivello;
-		this.boss = FactoryMob.getBossPerLevel(nomelivello);
+		this.nomePiano = nomePiano;
+		this.boss = FactoryMob.getBossPerLevel(nomePiano);
 	}
 
 	public BossRoom() {
@@ -27,11 +27,11 @@ public class BossRoom extends Room {
 	}
 
 	public String getNomelivello() {
-		return nomelivello;
+		return nomePiano;
 	}
 
-	public void setNomelivello(String nomelivello) {
-		this.nomelivello = nomelivello;
+	public void setNomelivello(String nomePiano) {
+		this.nomePiano = nomePiano;
 	}
 
 	public void setBoss(Boss boss) {
@@ -39,7 +39,7 @@ public class BossRoom extends Room {
 	}
 
 	public String getLivello() {
-		return nomelivello;
+		return nomePiano;
 	}
 
 	public boolean isBossDefeated() {

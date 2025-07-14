@@ -19,9 +19,6 @@ public class Boss extends Mob implements Speakable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<Item> getDropsList() {
-		return dropsList;
-	}
 
 	public void setDropsList(List<Item> dropsList) {
 		this.dropsList = dropsList;
@@ -50,15 +47,7 @@ public class Boss extends Mob implements Speakable {
 	}
 
 	public List<Item> getListDrop() {
-	    int maxRange = random.nextInt(6); // da 0 a 5 oggetti
-	    List<Item> drop = new ArrayList<>();
-
 	    
-		for (int i = 0; i < maxRange && !dropsList.isEmpty(); i++) {
-	        Item randomItem = dropsList.get(random.nextInt(dropsList.size()));
-	        drop.add(randomItem);
-	    }
-
-	    return drop;
+		return dropsList;
 	}
 }
