@@ -17,6 +17,8 @@ public class Main {
 	private static Floor floor = null;
 
 	private static Scanner input = new Scanner(System.in);
+	private static String [] floors = {"Piano terra", "Palazzo Accademia Informatica", "SMI", "Altopiano ITS", "﷼₽₾₷₴௹₯€₫"};
+	private static int indexFloors = 0; //Indice per scorrere nell'array dei piani
 
 	public static void main(String[] args) {
 
@@ -58,10 +60,11 @@ public class Main {
 		System.out.println("Come vuoi chiamarti?");
 		String name = input.nextLine();
 		Main.player = new Player(name); //Da salvare in file
-		Main.floor = new Floor("Piano terra"); //Da salvare in file
+		Main.floor = new Floor(floors[indexFloors]); //Da salvare in file
 		floor.generateMap();
 		player.setCurrentFloor(floor);
 		player.setCurrentRoom(floor.getInitialRoom());
+		floor.printMap();
 		
 		System.out.println("Ti trovi al Piano terra");
 		int choice = 0;
@@ -109,6 +112,38 @@ public class Main {
 				
 			}
 			
+			proceedToNextFloor();
+			
+		}
+		
+	}
+
+	private static void proceedToNextFloor() {
+		int choice = -1; //Scelta per voler proceder di piano
+		// se il boss è morto e il player si trova nella stanza del boss
+		if(floor.getBossRoom().getBoss() == null && player.getCurrentRoom().getName().equalsIgnoreCase(floor.getBossRoom().getName())) {
+			
+			player.examineRoom(player.getCurrentRoom());
+			System.out.println("Sei sicuro di voler procedere di piano? Non potrai più tornare indietro.\n1.Si'  2.No");
+			
+			while (choice < 1 || choice > 2) {
+				try {
+					choice = Integer.parseInt(input.nextLine());
+				} catch (Exception e) {
+					System.out.println("Hai inserito un valore non valido.");
+					choice = -1;
+				} 
+			}
+			
+			if (choice == 1) {
+				indexFloors++;
+				Floor nextFloor = new Floor(Main.floors[Main.indexFloors]);
+				floor = nextFloor;
+				floor.generateMap();
+				player.setCurrentRoom(floor.getInitialRoom());
+				player.setCurrentFloor(floor);
+				floor.printMap();
+			}
 		}
 		
 	}
