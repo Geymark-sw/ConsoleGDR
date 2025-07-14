@@ -155,6 +155,7 @@ public class Player extends Entity {
 			((Coin) item).consume();
 			this.value += ((Coin) item).getValue();
 			System.out.println("Hai raccolto " + ((Coin) item).getValue() + " monete!");
+			return true;
 		} else {
 			for (int i = 0; i < this.inventory.length; i++) {
 				if (this.inventory[i] == null) {
