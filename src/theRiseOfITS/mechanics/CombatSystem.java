@@ -81,7 +81,7 @@ public class CombatSystem {
         boolean comandoValido = false;
 
         while (!comandoValido) {
-            System.out.println("Cosa vuoi fare? (scrivi 'atk', 'heal' o 'inv')");
+            System.out.println("\nCosa vuoi fare? (scrivi 'atk', 'heal' o 'inv')");
             System.out.print("Comando: ");
             comando = scanner.nextLine().trim().toLowerCase(); 
 

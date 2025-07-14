@@ -19,6 +19,7 @@ import theRiseOfITS.concreto.rooms.BossRoom;
 import theRiseOfITS.concreto.rooms.Direction;
 import theRiseOfITS.concreto.rooms.Floor;
 import theRiseOfITS.concreto.rooms.MerchantRoom;
+import theRiseOfITS.concreto.rooms.TreasureRoom;
 import theRiseOfITS.mechanics.CombatSystem;
 
 public class Player extends Entity {
@@ -531,7 +532,7 @@ public class Player extends Entity {
 		if (nextRoom.getMobs() != null && !nextRoom.getMobs().isEmpty()) {
 			nemici.addAll(nextRoom.getMobs());
 		}
-		// Controllo se è una bossroom
+		// Controllo se è una boss room
 		if (nextRoom instanceof BossRoom bossRoom && bossRoom.getBoss() != null) {
 			nemici.add(bossRoom.getBoss());
 		}
@@ -539,11 +540,16 @@ public class Player extends Entity {
 			CombatSystem combat = new CombatSystem(this, nemici);
 			combat.startCombat();
 		}
-		
+		// Controllo se è una merchant room
 		if(nextRoom instanceof MerchantRoom merchantRoom && merchantRoom.getMerchant() != null) {
 			Merchant mercante = merchantRoom.getMerchant();
 			tradeWithMerchant(merchantRoom.getMerchant());
-			
+		}
+		// Controllo se è una treasure room
+		if(nextRoom instanceof TreasureRoom treasureRoom && treasureRoom.getChest() != null) {
+			Chest chest = treasureRoom.getChest();
+			System.out.println("\nEntri in una Stanza del Tesoro! C'è una " + chest.getNome() + ".");
+			//openChest(chest); // Il giocatore interagisce con la chest
 		}
 	}
 
