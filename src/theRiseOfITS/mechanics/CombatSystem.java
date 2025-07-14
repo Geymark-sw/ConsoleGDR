@@ -54,52 +54,69 @@ public class CombatSystem {
 	public void startCombat() {
         System.out.println("--- INIZIO COMBATTIMENTO ---");
 
-        // Il ciclo continua finché il giocatore è vivo e ci sono ancora nemici
         while (!player.isDead() && !nemici.isEmpty()) {
-            // 1. Turno del Giocatore
             turnoGiocatore();
-            if (nemici.isEmpty()) break; // Se il giocatore ha sconfitto l'ultimo nemico
+            if (nemici.isEmpty()) break; 
 
-            // 2. Turno dei Nemici
             turnoNemici();
-            if (player.isDead()) break; // Se un nemico ha sconfitto il giocatore
+            if (player.isDead()) break; 
         }
 
-        // 3. Fine del combattimento
         fineCombattimento();
-        //scanner.close();
     }
 
     private void turnoGiocatore() {
         System.out.println("\n--- TURNO DI " + player.getName() + " ---");
-        System.out.println(player); // Mostra lo stato del giocatore
+        System.out.println(player); 
 
-        // Mostra la lista dei nemici che il giocatore può attaccare
-        System.out.println("Scegli un nemico da attaccare:");
-        for (int i = 0; i < nemici.size(); i++) {
-            System.out.println((i + 1) + ": " + nemici.get(i));
-        }
+        String comando = "";
+        boolean comandoValido = false;
 
-        int scelta = -1;
-        // Chiedi un input valido
-        while (scelta < 1 || scelta > nemici.size()) {
-            System.out.print("Inserisci il numero del nemico: ");
-            try {
-                scelta = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Input non valido. Inserisci un numero.");
+        while (!comandoValido) {
+            System.out.println("Cosa vuoi fare? (scrivi 'attacca', 'curati' o 'inventario')");
+            System.out.print("Comando: ");
+            comando = scanner.nextLine().trim().toLowerCase(); 
+
+            if (comando.equals("attacca") || comando.equals("curati") || comando.equals("inventario")) {
+                comandoValido = true;
+            } else {
+                System.out.println("Comando non valido. Inserisci 'attacca', 'curati' o 'inventario'.");
             }
         }
 
-        Entity nemicoScelto = nemici.get(scelta - 1);
-        player.attack(nemicoScelto);
+        if (comando.equals("attacca")) { 
+            // Mostra la lista dei nemici che il giocatore può attaccare
+            System.out.println("Scegli un nemico da attaccare:");
+            for (int i = 0; i < nemici.size(); i++) {
+                System.out.println((i + 1) + ": " + nemici.get(i));
+            }
 
-        // Se il nemico è morto, rimuovilo dalla lista
-        if (nemicoScelto.isDead()) {
-            System.out.println(nemicoScelto.getName() + " è stato sconfitto!");
-            nemicoScelto.setHp(0);
-            dropLoot(nemicoScelto);
-            nemici.remove(nemicoScelto);
+            int sceltaNemico = -1;
+            // Chiedi un input valido
+            while (sceltaNemico < 1 || sceltaNemico > nemici.size()) {
+                System.out.print("Inserisci il numero del nemico: ");
+                try {
+                    sceltaNemico = Integer.parseInt(scanner.nextLine());
+                } catch (NumberFormatException e) {
+                    System.out.println("Input non valido. Inserisci un numero.");
+                }
+            }
+
+            Entity nemicoScelto = nemici.get(sceltaNemico - 1);
+            player.attack(nemicoScelto);
+
+            // Se il nemico è morto, rimuovilo dalla lista
+            if (nemicoScelto.isDead()) {
+                System.out.println(nemicoScelto.getName() + " è stato sconfitto!");
+                nemicoScelto.setHp(0); 
+                dropLoot(nemicoScelto);
+                nemici.remove(nemicoScelto);
+            }
+        } else if (comando.equals("curati")) { 
+            player.heal(); 
+        } else if (comando.equals("inventario")) {
+            // Entra nel menu inventario per una singola azione
+            player.openCombatInventoryMenu(); // Nuovo metodo nel Player
         }
     }
 
@@ -158,6 +175,4 @@ public class CombatSystem {
             }
         }
     }
-
-
 }
