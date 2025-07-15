@@ -18,7 +18,7 @@ public class Main {
 
 	private static Scanner input = new Scanner(System.in);
 	private static String [] floors = {"Piano terra", "Palazzo Accademia Informatica", "SMI", "Altopiano ITS", "﷼₽₾₷₴௹₯€₫"};
-	private static int indexFloors = 4; //Indice per scorrere nell'array dei piani
+	private static int indexFloors = 0; //Indice per scorrere nell'array dei piani
 
 	public static void main(String[] args) {
 
