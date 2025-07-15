@@ -7,9 +7,11 @@ import java.util.Scanner;
 import theRiseOfITS.astratto.Entity;
 import theRiseOfITS.astratto.Item;
 import theRiseOfITS.concreto.entity.Boss;
+import theRiseOfITS.concreto.entity.Merchant;
 import theRiseOfITS.concreto.entity.Mob;
 import theRiseOfITS.concreto.entity.Player;
 import theRiseOfITS.concreto.rooms.BossRoom;
+import theRiseOfITS.concreto.rooms.MerchantRoom;
 
 public class CombatSystem {
     private Player player;
@@ -148,10 +150,12 @@ public class CombatSystem {
         if (!player.isDead()) {
             System.out.println("VITTORIA! Hai sconfitto tutti i nemici.");
 
-            // Rimuove i mob normali sconfitti
+            // Rimuove i mob e gli entity sconfitti
             if (player.getCurrentRoom() != null) {
                 player.getCurrentRoom().rimuoviMobSconfitti();
             }
+            
+            
 
             // Se è una BossRoom e il boss è morto, rimuovilo
             if (player.getCurrentRoom() instanceof BossRoom bossRoom) {
@@ -159,6 +163,13 @@ public class CombatSystem {
                     System.out.println("🏆 Hai sconfitto il Boss di questo livello!");
                     bossRoom.rimuoviBossSconfitti();
                 }
+            }
+            // Se è una MerchantRoom e il mercante è morto, rimuovilo
+            if (player.getCurrentRoom() instanceof MerchantRoom merchantRoom) {
+            	if (merchantRoom.getMerchant() != null && merchantRoom.getMerchant().isDead()) {
+            		System.out.println("Hai sconfitto il mercante!");
+            		merchantRoom.rimuoviEntitySconfitte();
+            	}
             }
 
         } else {
@@ -173,7 +184,11 @@ public class CombatSystem {
             loot = boss.getDropsList();
         } else if (nemico instanceof Mob mob) {
             loot = mob.getListDrop();
+            
+        } else if (nemico instanceof Merchant merchant) {
+        	loot = merchant.getInventario();
         }
+        
 
         if (!loot.isEmpty() && player.getCurrentRoom() != null) {
         	player.getCurrentRoom().getItems().addAll(loot);

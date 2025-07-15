@@ -429,15 +429,17 @@ public class Player extends Entity {
 	public void tradeWithMerchant(Merchant merchant) {
 		Scanner scanner = new Scanner(System.in);
 		boolean trading = true;
+		if(!merchant.isDead()) {
+			System.out.println("\n--- Benvenuto nel negozio di " + merchant.getName() + "! ---");
+			merchant.speak();
+		}else System.out.println("\n--- Benvenuto nel negozio di " + merchant.getName() + ", "+ merchant.getName() + " non è più qui.");
 
-		System.out.println("\n--- Benvenuto nel negozio di " + merchant.getName() + "! ---");
-		merchant.speak();
-
-		while (trading) {
+		while (trading && !merchant.isDead()) {
 			System.out.println("\nLe tue monete: " + this.getValue());
 			merchant.mostraInventario(); // mostra gli oggetti del mercante
 			System.out.println("\nCosa vuoi fare?");
 			System.out.println(" - Compra [numero oggetto] (es. 'compra 1')");
+			System.out.println(" - Attacca");
 			System.out.println(" - Esci");
 			System.out.print("Comando: ");
 			String input = scanner.nextLine().trim().toLowerCase();
@@ -465,7 +467,17 @@ public class Player extends Entity {
 				} catch (NumberFormatException e) {
 					System.out.println("Comando non valido. Usa 'compra [numero oggetto]'.");
 				}
-			} else {
+				
+			}
+			
+			else if(input.equals("attacca")) {
+				List<Entity> nemici = new ArrayList<>();
+				nemici.add(merchant);
+				CombatSystem combat = new CombatSystem(this, nemici);
+				combat.startCombat();
+			}
+			
+			else {
 				System.out.println("Comando non riconosciuto.");
 			}
 		}

@@ -128,6 +128,10 @@ public abstract class Room {
 	public void rimuoviMobSconfitti() {
 	    mobs.removeIf(Mob::isDead);
 	}
+	
+	public void rimuoviEntitySconfitte() {
+		npcs.removeIf(Entity::isDead);
+	}
 
 	public void rimuoviItemRaccolti() {
 	    items.removeIf(Item::isRaccolto);

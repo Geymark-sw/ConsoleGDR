@@ -13,6 +13,7 @@ public class MerchantRoom extends Room{
 	public MerchantRoom(String name) {
 		super(name);
 		this.merchant = FactoryMerchant.creaMerchant();
+		this.getNpcs().add(merchant);
 	}
 	
 	public MerchantRoom() {
