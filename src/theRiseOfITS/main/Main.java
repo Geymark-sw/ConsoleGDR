@@ -111,12 +111,41 @@ public class Main {
 					break;
 				
 			}
-			
-			proceedToNextFloor();
+			//Se il giocatore non si trova all'ultimo piano
+			if (!player.getCurrentFloor().getName().equalsIgnoreCase(floors[floors.length - 1])) {
+				proceedToNextFloor();
+			} else if(player.getCurrentFloor().isBossDefeated() && player.getCurrentFloor().getName().equalsIgnoreCase(floors[floors.length - 1])) {
+				endGame();
+				
+			}
 			
 		}
 		
 	}
+
+	private static void endGame() {
+		System.out.println("Congratulzioni hai completato The Rise of ITS!");
+		System.out.println("Vuoi Terminare il gioco o continuare ad esplorare la mappa?\n"
+				+ "1. Termina gioco\n"
+				+ "2. Esplora mappa");
+		int choice = -1;
+		while(choice < 1 || choice > 2) {
+			try {
+				choice = Integer.parseInt(input.nextLine());
+				if(choice < 1 || choice > 2)
+					System.out.println("Hai inserito un valore non valido.");
+			}catch(Exception e) {
+				System.out.println("Hai inserito un valore non valido.");
+				choice = - 1;
+			}
+			if(choice == 1) {
+				finalPrint();
+			}
+		}
+		
+	}
+
+	
 
 	private static void proceedToNextFloor() {
 		int choice = -1; //Scelta per voler proceder di piano
@@ -204,6 +233,29 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	private static void finalPrint() {
+		System.out.println("⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠉⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⡿⠛⢿⣿⣿⣿⣿⠁⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⣷⡀⠀⠹⣿⣿⡿⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣷⡄⠀⠘⣿⡇⠀⢰⣿⡿⠛⠉⠛⢻⣿⣿⣿⠟⢿⣿⣿⣿⡟⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⣆⠀⠈⠁⠀⣾⠋⠀⠀⢀⡀⠀⢹⣿⣷⠀⠀⣿⣿⣿⡇⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⣿⣧⡄⠀⢀⣿⠀⠀⠀⣾⡇⠀⢈⣿⣿⡀⠀⢹⣿⠟⠁⠀⣸⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⣿⣿⠿⢿⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⣿⣿⠃⠀⣼⣿⣷⡀⠀⠙⠁⠀⣸⣿⣿⣧⠀⠀⠁⠀⣠⣾⣿⣿⣿⣿⣿⠏⠀⠀⠚⢿⣿⣿⣿⡿⠁⠀⣀⣀⠈⠀⠀⠀⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⣿⡇⠀⢠⣿⣿⣿⣷⣤⣤⣤⣾⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⢠⠀⠀⢸⣿⣿⣿⠃⠀⢰⣿⠏⠀⠀⠀⢀⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⡿⠁⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⣼⠂⠀⠸⣿⣿⣿⠀⠀⣿⡟⠀⠀⠀⣠⣿⣿⣿⣿\r\n"
+				+ "⣿⣿⣿⣿⣿⣧⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠋⠀⢈⠈⠈⠛⠻⠀⠀⢹⡇⠀⠠⠾⠿⠿⠟⠉⠈\r\n"
+				+ "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣀⣀⣴⣿⣿⣦⣀⣤⣦⣤⣿⣿⣦⣀⣀⠀⢀⣀⣤⣾\r\n"
+				+ "⣿⣿⣿⡿⠋⠉⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠙⣿⣿⡟⠉⢙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⡿⠋⠀⢠⣴⣿⣿⣿⣿⣿⣿⣿⠟⠁⠉⢿⣿⣿⣿⠅⠙⣿⣿⣿⣿⠀⠂⣿⣿⡏⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⠁⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⢀⠀⠈⢿⣿⣿⣥⠀⠘⢿⣿⣿⠀⠀⣿⣿⡇⢠⢣⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⡏⠀⢰⣿⣿⡿⠛⠛⠛⠛⠛⠛⠀⠀⠼⠆⠀⠘⠛⢿⣿⣦⡀⠈⠙⠿⠄⠀⣿⣿⡇⠀⠠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⡇⠀⢸⣿⣿⣧⣤⣤⣤⠄⠀⠀⠀⣀⣀⣀⡀⠀⢠⣼⣿⣿⣿⣦⣀⡀⠀⢠⣿⣿⣷⣀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣇⠀⠘⢿⣿⣿⡿⠟⠋⠀⡀⠀⢠⣿⣿⣿⣧⠀⠈⢻⣿⣿⣿⣿⣿⠇⠀⢸⣿⣿⡿⠋⠉⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\r\n"
+				+ "⣿⣦⡀⠀⠀⠀⠀⢀⣠⣾⣿⣤⣾⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⠀⠀⣾⣿⣿⣧⣀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
+		exitGame();
 		
 	}
 
